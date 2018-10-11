@@ -1,0 +1,42 @@
+{% extends "preference_separation/PageBase.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    导言
+{% endblock %}
+
+{% block content %}
+
+
+
+    <p>同学们好，欢迎参加我们的游戏。今天我们来玩一个看汉字查数字的游戏。每个参加这个游戏的同学都可以得到<b>2</b>块钱。</p>
+    <p>同时，请注意不要东张西望，交头接耳。如果有什么不懂的，
+        请举手，老师会给你解答。如果有人偷看别人的屏幕，或者跟别人说话，我们将请他离开教室。</p>
+    <p>这个游戏需要用键盘。今天会用到键盘上的数字键和“<b>确定</b>”键，大家请在自己面前的键盘上找到这些键。</p>
+    <br>
+
+    {% if session.vars.is_debug == True %}
+
+        <h4 style="color:Red;"> Debug Mode 开启</h4>
+    {% endif %}
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script>
+        lockPageElements();
+        function hotkey(e)
+        {
+            kc = window.event ? event.keyCode : e.which;
+            if(kc == 49){
+                alert(1);
+            }
+        }// end hotkey
+
+        document.onkeypress = hotkey; //当onkeydown 事件发生时调用hotkey函数
+
+    </script>
+
+{% endblock %}
+

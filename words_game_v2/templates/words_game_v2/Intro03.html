@@ -1,0 +1,21 @@
+{% extends "preference_separation/PageBase.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    第三轮游戏：
+{% endblock %}
+
+{% block content %}
+
+    <p>这轮游戏要玩<b>{{ session.vars.game_time_sec }}秒</b>。</p>
+
+    <p>这一轮的玩法是：你要先选择是否和另外一名同学比赛。完成选择后游戏才开始。</p>
+
+    <p>如果你选择<b>不比赛</b>，你的得分将由你自己做对的个数决定，也就是你每做对一个，可以得<b>1分</b>。</p>
+
+    <p> 如果选择<b>比赛</b>，我们将给你重新找一个对手，但你不知道这个对手是谁。
+      你们两个人谁做对的个数多谁就赢。赢的人每做对一个可以得<b>2分</b>，而输的同学得<b>0分</b>；
+      如果你和你的对手做对的个数一样，那么你们每做对一个可以得到<b>1分</b>。</p>
+
+
+{% endblock %}

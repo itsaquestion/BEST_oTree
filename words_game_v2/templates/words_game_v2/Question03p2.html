@@ -1,0 +1,55 @@
+{% extends "preference_separation/PageBase.html" %}
+{% load staticfiles otree %}
+
+
+{% block title %}
+    问题
+{% endblock %}
+
+{% block content %}
+
+
+   {% formfield player.accomplish_02 label="请问你认为你第二轮游戏的结果如何？" %}
+    选择完成后请按确定键。
+
+
+    <p>    <button id = "fake_next"  class="btn btn-primary btn-large">下一页</button></p>
+
+
+{#    {% if player.will_compete_03 == False %}#}
+{#        {% formfield player.guess_win_03 label="如果拿你第三轮游戏的结果跟别人进行比赛，你认为你的结果如何？" %}#}
+{#    {% else %}#}
+{##}
+{#        <input type="hidden" name="guess_win_03" value='失败', id="id_guess_win_03">#}
+{#    {% endif %}#}
+{#    {% next_button %}#}
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+
+    lockPageElements();
+    function hotkey(e)
+    {
+        kc = window.event ? event.keyCode : e.which;
+        if(kc==49)
+        {
+
+            document.getElementById("id_accomplish_02_1").checked = true;
+        }
+        if(kc==50)
+        {
+            document.getElementById("id_accomplish_02_2").checked = true;
+        }
+         if(kc==13)
+         {
+                document.getElementById("fake_next").click();
+         }
+    }// end hotkey
+
+    document.onkeypress = hotkey; //当onkeydown 事件发生时调用hotkey函数
+
+    </script>
+{% endblock %}
+

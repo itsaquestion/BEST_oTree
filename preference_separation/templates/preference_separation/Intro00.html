@@ -1,0 +1,49 @@
+{% extends "preference_separation/PageBase.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+
+
+    <p>现在我们开始第一个游戏——编码游戏。</p>
+    <p>游戏的规则如下：</p>
+
+
+    <p>电脑屏幕上将弹出一个汉字，你需要根据我们发给你的汉字表中找出相应的汉字，然后将该汉字后面对应的三位数字输入电脑，
+        然后按“enter”键。电脑提示“回答正确”即会跳到下一个汉字，提示“回答错误”就会停留在当前汉字，直到你输入正确才会跳到下一个汉字。</p>
+    <p>每一轮游戏的汉字都是不同的，请根据每一轮的汉字表进行输入。</p>
+
+    <p>如有问题请举手，我们将为你解答。</p>
+
+    <p>正式开始游戏之前，请先进行练习。练习阶段不计算报酬。</p>
+
+    {% next_button %}
+
+    {% if session.vars.is_debug == True %}
+
+        <h4 style="color:Red;"> Debug Mode 开启</h4>
+    {% endif %}
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script>
+        lockPageElements();
+        function hotkey(e)
+        {
+            kc = window.event ? event.keyCode : e.which;
+            if(kc == 49){
+                alert(1);
+            }
+        }// end hotkey
+
+        document.onkeypress = hotkey; //当onkeydown 事件发生时调用hotkey函数
+
+    </script>
+
+{% endblock %}
+

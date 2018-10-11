@@ -1,0 +1,16 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+
+{% block title %}
+    你能赢吗？
+{% endblock %}
+
+{% block content %}
+
+
+    {% formfield player.guess_win_01 label="根据你刚才的表现，你认为你这次任务的结果如何？" %}
+
+    {% next_button %}
+
+{% endblock %}

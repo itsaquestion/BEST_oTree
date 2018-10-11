@@ -1,0 +1,70 @@
+{% extends "preference_separation/PageBase.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    第一轮彩票游戏
+{% endblock %}
+
+{% block scripts %}
+
+    <!-- define a script -->
+    <script>
+
+        function feedback_flash() {
+            document.getElementById('feedback').style.backgroundColor = "LAVENDER";
+            setTimeout(function () {
+                document.getElementById('feedback').style.backgroundColor = "white"
+            }, 200);
+        }
+
+        function check() {
+
+            var ans1 = (document.getElementById('id_intro_q1_1').checked);
+            var ans2 = (document.getElementById('id_intro_q2_2').checked);
+            var error_message = "";
+            {#alert(ans1)#}
+            {#alert(ans2)#}
+            {#alert(ans3)#}
+            if (ans1 & ans2 ) {
+                document.getElementById("fake_next").click();
+            } else {
+                error_message = "答案没有完全正确，请重新选择！";
+                document.getElementById("feedback").innerHTML = error_message;
+                feedback_flash();
+            }
+
+        }
+
+    </script>
+
+
+{% endblock %}
+
+{% block content %}
+
+
+    <p>游戏的规则如下：</p>
+    <p>
+        屏幕上将出现10对彩票组合，每对彩票包括了彩票A和彩票B两种类型，这两种彩票的面值和中奖概率不相同。选择彩票A，你将有a%的概率得到e元和（1-a）%的概率得f元；选择彩票B，你将有a%的概率得到m元和（1-a）%的概率得n元。请根据自己的喜好对每对彩票组合中的两种彩票进行选择，你可以选择彩票A或者彩票B。你的选择将直接影响你最终能获得的报酬，因此请认真进行选择。游戏结束后，电脑将从10对彩票组合中随机抽取一对，然后根据你在该对彩票的选择来计算你的最终报酬。为了确保你完全理解彩票游戏的规则，请先回答以下问题：</p>
+
+
+
+    问题1：我们是对你们选择的10对彩票都进行支付还是随机选择其中一对进行支付？
+    {% formfield player.intro_q1 label="" %}
+
+    问题2：如果在本轮游戏的支付报酬环节你被抽中第x对彩票，其中你选择的是a%的概率获得m元，(1-a)%的概率获得n元，请问你在本轮获得报酬为：
+    {% formfield player.intro_q2 label="" %}
+
+    <p>全部选择完请按“下一页”开始正式游戏。</p>
+
+    <input type="button" class="btn btn-primary btn-large" value="下一页" onClick="check()">
+    <H2 id="feedback"></H2>
+
+    <div hidden>
+        <button id="fake_next" class="btn btn-primary btn-large">下一页</button>
+    </div>
+
+
+
+
+{% endblock %}

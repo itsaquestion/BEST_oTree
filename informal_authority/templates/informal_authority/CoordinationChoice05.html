@@ -1,0 +1,18 @@
+{% extends "informal_authority/CoordinationChoiceBase.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+
+{% endblock %}
+
+
+{% block c_block %}
+    <p>
+        <tr>
+
+            {% for choice in form.co_choice_05 %}
+                <td>&nbsp;&nbsp;<b>{{ choice }}</b></td>
+            {% endfor %}
+        </tr>
+    </p>
+{% endblock %}

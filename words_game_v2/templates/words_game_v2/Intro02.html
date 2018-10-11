@@ -1,0 +1,18 @@
+{% extends "preference_separation/PageBase.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    第二轮游戏
+{% endblock %}
+
+{% block content %}
+
+
+
+    <p>这轮游戏要玩<b>{{ session.vars.game_time_sec }}秒</b>。</p>
+
+    <p>这一轮的玩法是：你需要先给自己设定一个“<b>做对多少个</b>”的目标。</p>
+    <p>如果你达到或者超过了你的目标，你的得分等于你的目标；如果你没有完成你的目标，你就只能得<b>0分</b>。</p>
+
+
+{% endblock %}

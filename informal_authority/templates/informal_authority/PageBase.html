@@ -1,0 +1,58 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block app_styles %}
+
+    <style type="text/css">
+        p{ text-indent:2em
+        }
+    </style>
+
+   <!-- define a style -->
+    <style type="text/css">
+        .matrix {
+            font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+            font-size: x-large;
+            line-height: 30px;
+            letter-spacing: 5px;
+        {#margin:0 auto;#}
+        }
+
+    </style>
+
+
+{% endblock %}
+
+{% block app_scripts %}
+      <script>
+
+        function makeMatrix(x, y, n_0) {
+            //共n个元素
+            var n = x * y;
+
+            var n_1 = n - n_0;
+
+            var arr0 = new Array(n_0).fill(0);
+            var arr1 = new Array(n_1).fill(1);
+
+            var arr_all = arr0.concat(arr1);
+            arr_all = arr_all.sort(function (a, b) {
+                return Math.random() > .5 ? -1 : 1;
+            });
+
+            var matrix_html = "";
+
+            for (var i = 0; i < n; i++) {
+                matrix_html = matrix_html.concat(arr_all[i]);
+                if (((i + 1) % x) == 0) {
+                    matrix_html = matrix_html.concat("<br>")
+                }
+            }
+
+            return (matrix_html)
+        }
+
+    </script>
+
+
+{% endblock %}

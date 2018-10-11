@@ -1,0 +1,58 @@
+{% extends "preference_separation/PageBase.html" %}
+{% load staticfiles otree %}
+
+
+{% block title %}
+    问题
+{% endblock %}
+
+{% block content %}
+
+
+    <p>选择<b>不比赛</b>：每做对一个，得<b>1元</b>。</p>
+    <p>选择<b>比赛</b>，赢了：每做对一个，得<b>2元</b>。</p>
+    <p>选择<b>比赛</b>，输了：得<b>0元</b>。</p>
+    <p>选择<b>比赛</b>，做对的个数一样，将会随机选择一个胜利者。</p>
+
+
+    <hr>
+
+
+    <th>{% formfield player.will_compete_03 label="你的选择是" %}</th>
+
+
+    <p>选择完成后请按确定键。</p>
+    <p>有问题请举手。</p>
+
+    <p>    <button id = "fake_next"  class="btn btn-primary btn-large">下一页</button></p>
+
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+
+    lockPageElements();
+    function hotkey(e)
+    {
+        kc = window.event ? event.keyCode : e.which;
+        if(kc==49)
+        {
+
+            document.getElementById("id_will_compete_03_1").checked = true;
+        }
+        if(kc==50)
+        {
+            document.getElementById("id_will_compete_03_2").checked = true;
+        }
+         if(kc==13)
+         {
+                document.getElementById("fake_next").click();
+         }
+    }// end hotkey
+
+    document.onkeypress = hotkey; //当onkeydown 事件发生时调用hotkey函数
+
+    </script>
+{% endblock %}
+

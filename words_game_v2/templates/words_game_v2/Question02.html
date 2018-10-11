@@ -1,0 +1,67 @@
+{% extends "preference_separation/PageBase.html" %}
+{% load staticfiles otree %}
+
+
+{% block title %}
+    你的目标是？
+{% endblock %}
+
+
+{% block content %}
+
+    <p>达成目标：你的得分等于你的目标</p>
+    <p>没达成目标：0分</p>
+    <p>
+    <hr>
+        <table >
+          <tr>
+            <th>你的目标是：做对</th>
+            <th>{% formfield player.target_02 label="" %}</th>
+            <th>个</th>
+          </tr>
+        </table>
+
+
+        </table>
+
+    </p>
+    <p>填写完成后请按确定键。</p>
+    <p></p>
+    <p>有问题请举手。</p>
+   <button id = "fake_next"  class="btn btn-primary btn-large">下一页</button>
+
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        lockPageElements("id_target_02");
+
+        function hotkey(e)
+        {
+            kc = window.event ? event.keyCode : e.which;
+            if(kc==49)
+            {
+
+                document.getElementById("id_guess_win_01_1").checked = true;
+            }
+            if(kc==50)
+            {
+                document.getElementById("id_guess_win_01_2").checked = true;
+            }
+            if(kc==51)
+            {
+                document.getElementById("id_guess_win_01_3").checked = true;
+            }
+            if(kc==13)
+            {
+                document.getElementById("fake_next").click();
+            }
+        }// end hotkey
+
+        document.onkeypress = hotkey; //当onkeydown 事件发生时调用hotkey函数
+
+    </script>
+
+{% endblock %}
+

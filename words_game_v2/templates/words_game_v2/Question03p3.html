@@ -1,0 +1,56 @@
+{% extends "preference_separation/PageBase.html" %}
+{% load staticfiles otree %}
+
+
+{% block title %}
+    问题
+{% endblock %}
+
+{% block content %}
+
+    {% if player.will_compete_03 == False %}
+        {% formfield player.guess_win_03 label="如果第三轮游戏中，你选择跟别人比赛，你认为你的结果是？" %}
+    {% else %}
+
+        {% formfield player.guess_win_03 label="请问你认为你第三轮的比赛结果是？" %}
+    {% endif %}
+    <p>选择完成后请按确定键。</p>
+    <p>    <button id = "fake_next"  class="btn btn-primary btn-large">下一页</button></p>
+
+
+
+
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+
+    lockPageElements();
+    function hotkey(e)
+    {
+        kc = window.event ? event.keyCode : e.which;
+        if(kc==49)
+        {
+
+            document.getElementById("id_guess_win_03_1").checked = true;
+        }
+        if(kc==50)
+        {
+            document.getElementById("id_guess_win_03_2").checked = true;
+        }
+        if(kc==51)
+        {
+            document.getElementById("id_guess_win_03_3").checked = true;
+        }
+         if(kc==13)
+         {
+                document.getElementById("fake_next").click();
+         }
+    }// end hotkey
+
+    document.onkeypress = hotkey; //当onkeydown 事件发生时调用hotkey函数
+
+    </script>
+{% endblock %}
+

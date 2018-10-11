@@ -1,0 +1,22 @@
+{% extends "informal_authority/PageBase.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+    <p>请等待实验开始</p>
+
+
+{#    {% next_button %}#}
+    {% if session.vars.is_debug == True %}
+
+        <h4 style="color:Red;"> Debug Mode 开启</h4>
+        player.participant.label: {{ player.participant.label }}
+        <br>
+        player.id_in_subsession: {{ player.id_in_subsession }}
+        <br>
+        player.treatment: {{ player.treatment }}
+    {% endif %}
+{% endblock %}

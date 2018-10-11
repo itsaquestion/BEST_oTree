@@ -1,0 +1,53 @@
+{% extends "preference_separation/PageBase.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    最终结果
+{% endblock %}
+
+{% block content %}
+
+
+    <p>
+        第一轮游戏中，你做对了<b>{{ player.correct_01 }}</b>个。<br>
+        比赛结果是：<b>{{ player.result_01 }}</b>。<br>
+        本轮得分是<b>{{ player.profit_01 }}</b>分。
+    </p>
+
+
+    <p>
+        第二轮游戏中，你做对了<b>{{ player.correct_02 }}</b>个。<br>
+        你给自己定的目标是做对<b>{{ player.target_02 }}</b>个。<br>
+        你<b>
+        {% if player.correct_02 >= player.target_02  %}
+            达到了
+        {% else %}
+            没有达到
+        {% endif %}
+        </b>自己的目标。<br>
+        本轮得分是<b>{{ player.profit_02 }}</b>分。
+    </p>
+
+    <p>
+        第三轮游戏中，你做对了<b>{{ player.correct_03 }}</b>个。<br>
+
+        你比赛的结果是：
+        {% if player.will_compete_03 == True  %}
+           <b>{{ player.result_03 }}</b>。
+        {% else %}
+            <b>不进行比赛</b>
+        {% endif %}
+        <br>
+
+        本轮得分是<b>{{ player.profit_03 }}</b>分。 <br>
+    </p>
+    <hr>
+    <p>
+        电脑抽取了第<b>{{ player.pay_round }}</b>轮来计算你的得分，你的得分是<b>{{ player.profit_final }}分</b>,
+        可以兑换<b>{{ player.payoff }}元</b>。你还可以另外获得两元作为参与费，所以你可以得到<b>{{ player.payoff_plus_fee }}元</b>。
+
+    </p>
+
+{% endblock %}
+
+

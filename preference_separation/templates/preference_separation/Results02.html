@@ -1,0 +1,16 @@
+{% extends "preference_separation/PageBase.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+
+    <p>你被抽中的是第{{ player.payoff_02_num }}对彩票，你选择的是彩票{{ player.ans_02 }}，在本轮游戏的报酬是：{{ player.profit_02 }}元</p>
+
+    请按“下一页”开始下一个游戏。
+        {% next_button %}
+{% endblock %}
+
+

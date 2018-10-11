@@ -1,0 +1,38 @@
+{% extends "preference_separation/PageBase.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    第一次结果
+{% endblock %}
+
+{% block content %}
+
+
+    <p>本轮游戏中，你做对了<b>{{ player.correct_01 }}个</b></p>
+
+    {% if player.show_result_01 %}
+    <p>你的比赛结果是: <b>{{ player.result_01 }}</b></p>
+    {% endif %}
+
+    {% if Constants.is_debug %}
+        <div class="panel panel-default">
+            <div class="panel-heading">内部数据</div>
+            总数： <b>{{ player.total_01 }} </b> <br>
+
+            正确数：<b>{{ player.correct_01 }} </b><br>
+
+            实际胜负：<b>{{ player.result_01 }}</b><br>
+
+            猜测胜负：<b>{{ player.guess_win_01 }}</b><br>
+
+            是否显示结果：<b>{{ player.show_result_01 }}</b><br>
+
+            赢利：<b>{{ player.profit_01 }}</b><br>
+
+            对手：<b>{{ player.partner_01 }}</b><br>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+

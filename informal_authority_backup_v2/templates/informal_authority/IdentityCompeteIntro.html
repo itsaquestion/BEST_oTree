@@ -1,0 +1,48 @@
+{% extends "informal_authority/PageBase.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+    <p>本场游戏没有报酬，但游戏结果决定你们进入下一场游戏的身份。</p>
+    <p>你和你的对手将进行一场竞赛，竞赛的内容是在<b>{{ timeout_string }}</b>内完成尽可能多的数零任务。</p>
+    <p>具体地，游戏开始后，你会看到类似右边的数字表（{{ session.vars.matrix_x }}行*{{ session.vars.matrix_y }}列）。
+        你要尽快数完其中<b>0</b>的个数，填入表格下方空格，然后点击OK按钮确认。</p>
+    <p>如果你输入的答案正确，电脑会自动生成一个新的图表，同时已完成任务的数量将增加。</p>
+    <p>如果你输入的答案错误，你还有另外的两次机会重新输入答案（所以共有三次机会）。
+        你只要在三次机会中输入正确答案一次，即被判为正确。如果在同一张图表中，三次输入均不正确，
+        电脑将更换图表，但已完成任务的数量不会增加。</p>
+    <p>在8分钟后，竞赛会自动终止。</p>
+
+    {% if player.treatment == "compete_wl" %}
+        
+        <p>• 完成任务数量更多的一方，将被判为“<b>{{ Constants.label_winner }}</b>”，
+            以“<b>{{ Constants.label_winner }}</b>”的身份进入第二场游戏；</p>
+        <p>• 完成任务数量更少的一方，将被判为“<b>{{ Constants.label_loser }}</b>”，
+            以“<b>{{ Constants.label_loser }}</b>”的身份进入第二场游戏。</p>
+        <p>• 若平局，则会随机判为“<b>{{ Constants.label_color_loser1 }}</b>”或者“<b>{{ Constants.label_color_loser2 }}</b>”的身份进入第二场游戏。</p>
+    {% endif %}
+
+    {% if player.treatment == "compete_wl_color" %}
+        <p>• 如果双方完成任务都未达到<b>{{ correct_threshold }}</b>次，则双方都将被判为“<b>{{ Constants.label_loser }}</b>”。
+            此时意味着没有“<b>{{ Constants.label_winner }}</b>”。
+            双方将随机地以“<b>{{ Constants.label_color_loser1 }}</b>”或“<b>{{ Constants.label_color_loser2 }}</b>”身份进入第二场游戏。</p>
+        <p>• 如果一方完成任务达到<b>{{ correct_threshold }}</b>次而另一方未达到<b>{{ correct_threshold }}</b>次，则达到<b>{{ correct_threshold }}</b>次的一方为“<b>{{ Constants.label_winner }}</b>”，
+            没达到<b>{{ correct_threshold }}</b>次的一方是“<b>{{ Constants.label_loser }}</b>”。
+            胜败双方分别以“<b>{{ Constants.label_winner }}</b>”和“<b>{{ Constants.label_loser }}</b>”身份进入第二场游戏。</p>
+        <p>• 如果双方完成任务都达到<b>{{ correct_threshold }}</b>次，则以完成次数多的为“<b>{{ Constants.label_winner }}</b>”，
+            完成次数少的为“<b>{{ Constants.label_loser }}</b>”。
+            胜败双方分别以“<b>{{ Constants.label_winner }}</b>”和“<b>{{ Constants.label_loser }}</b>”身份进入第二场游戏。</p>
+        <p>• 如果双方完成任务都达到<b>{{ correct_threshold }}</b>次且平局，
+            则会随机判为“<b>{{ Constants.label_color_loser1 }}</b>”或者“<b>{{ Constants.label_color_loser2 }}</b>”的身份进入第二场游戏。</p>
+    {% endif %}
+
+
+    <p>如果你有不明白的地方，可以向实验人员提问。若没有不明白的地方，可以开始游戏。</p>
+
+
+    {% next_button %}
+
+{% endblock %}

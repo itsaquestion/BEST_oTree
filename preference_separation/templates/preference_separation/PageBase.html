@@ -1,0 +1,51 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block app_styles %}
+
+    <style type="text/css">
+        /* custom styles go here */
+    p {
+        font-size: 18px;
+    }
+
+    input
+    {
+        font-size: 18px;
+    }
+    </style>
+
+{% endblock %}
+
+{% block app_scripts  %}
+
+    <script>
+        function lockPageElements(input_id){
+             // ban right click menu
+            //document.addEventListener('contextmenu', event => event.preventDefault());
+
+            // focus comes back on 'input_id'
+            if(document.getElementById(input_id)){
+                 document.getElementById(input_id).onblur = function (event) {
+                var blurEl = this;
+                setTimeout(function() {
+                    blurEl.focus()
+                }, 10);
+            };
+
+            //'number' get focus
+            document.getElementById(input_id).focus();
+            }
+
+        }
+
+
+    </script>
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        lockPageElements();
+    </script>
+{% endblock %}

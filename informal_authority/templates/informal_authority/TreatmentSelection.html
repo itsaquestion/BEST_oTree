@@ -1,0 +1,16 @@
+{% extends "informal_authority/PageBase.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+
+{% endblock %}
+
+
+{% block content %}
+    <p>
+        <tr>
+            {% formfield group.treatment %}
+        </tr>
+    </p>
+        {% next_button %}
+{% endblock %}

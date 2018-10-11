@@ -1,0 +1,21 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    第三次结果
+{% endblock %}
+
+{% block content %}
+
+    <p>对手是：{{ player.partner_03 }}</p>
+
+    <p>第三次正确个数：{{ player.counter_03 }}</p>
+
+    <p>profit_03： {{ player.profit_03 }}</p>
+
+    <p>是否赢家：{{ player.is_winner_03 }}</p>
+
+    <p>是否显示输赢：{{ player.show_winner_03 }}</p>
+{% endblock %}
+
+

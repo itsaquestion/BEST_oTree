@@ -1,0 +1,19 @@
+{% extends "preference_separation/PageBase.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    第一轮游戏
+{% endblock %}
+
+{% block content %}
+
+<p>这轮游戏要玩<b>{{ session.vars.game_time_sec }}秒</b>。</p>
+<p>这一轮的玩法是：你需要跟现场某个同学比赛，这个同学是谁你并不知道。</p>
+<p>你们两个人谁做对的多谁就赢。赢的人每做对一个可以得到<b>2分</b>，
+    而输的同学得到<b>0分</b>；如果你和你的对手做对的一样多，那么你们每做对一个可以得到<b>1分</b>。<p>
+<p>有问题请举手。</p>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+
+    请等待实验开始。
+
+    {% if session.vars.is_debug == True %}
+
+        <h4 style="color:Red;"> Debug Mode 开启</h4>
+        Number of Rounds : {{ Constants.num_rounds}}
+        <br>
+        Regroup Rounds : {{ session.vars.regroup_rounds }}
+        <br>
+
+    {% endif %}
+
+{% endblock %}

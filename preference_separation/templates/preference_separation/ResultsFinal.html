@@ -1,0 +1,48 @@
+{% extends "preference_separation/PageBase.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    最终结果
+{% endblock %}
+
+{% block content %}
+
+
+
+    <p>编码游戏第一轮中，你选择了{% if player.will_compete_01 == True %}
+        比赛
+    {% else %}
+        不进行比赛
+    {% endif %}
+        。正确编码了{{ player.correct_01 }}个汉字。
+        本轮得到{{ player.profit_01 }}元。
+    </p>
+
+    <p>彩票游戏第一轮，你抽中了{{ player.payoff_02_num }}。本轮得到{{ player.profit_02 }}元。
+    </p>
+
+
+    <p>编码游戏第二轮，你选择了{% if player.will_compete_03 == True %}
+        比赛
+    {% else %}
+        不进行比赛
+    {% endif %}。正确编码了{{ player.correct_03 }}个汉字。
+        本轮得到{{ player.profit_03 }}元。
+    </p>
+
+
+    <p>彩票游戏第二轮，你抽中了{{ player.payoff_04_num }}。本轮得到{{ player.profit_04 }}元。
+    </p>
+
+
+
+    <hr>
+    <p>
+        电脑抽取了第<b>{{ player.pay_round_01 }}</b>轮编码游戏和第<b>{{ player.pay_round_02 }}</b>轮彩票游戏来计算你的最终报酬。</p>
+    <p>
+        你总共得到<b>{{ player.payoff }}元</b>。你还可以另外获得{{ session.vars.fee }}元作为参与费，所以你可以得到<b>{{ player.payoff_plus_fee }}元</b>。
+    </p>
+
+{% endblock %}
+
+

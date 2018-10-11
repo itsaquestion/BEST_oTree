@@ -1,0 +1,45 @@
+{% extends "preference_separation/PageBase.html" %}
+{% load staticfiles otree %}
+
+{% block styles %}
+
+    <!-- define a style -->
+    <style type="text/css">
+        input[type='text'] {
+            font-size: 24px;
+        }
+
+        table, td, th {
+            border: 1px solid black;
+        }
+
+    </style>
+
+
+
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+
+    <table class="table" >
+        <tr>
+            <td>序号</td>
+            <td>彩票A</td>
+            <td>彩票B</td>
+        </tr>
+        {% for field in form %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                {% for choice in field %}
+                    <td>{{ choice }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+
+    <button id="ok" class="btn btn-primary btn-large">确定</button>
+{% endblock %}
+

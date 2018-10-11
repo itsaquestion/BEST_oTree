@@ -1,0 +1,27 @@
+{% extends "preference_separation/PageBase.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+
+
+
+
+<p>现在即将开始第一轮编码游戏。</p>
+<p>游戏规则如下：</p>
+<p>1. 每个人有{{ session.vars.game_time_sec }}秒进行编码游戏。</p>
+<p>2. 在游戏开始之前，请先选择是否与别人进行比赛。</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;如果选择不比赛，每正确编码一个汉字可以得到1元。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;如果选择比赛，得分将由比赛结果决定。获胜的同学每正确编码一个汉字可以得到2元；失败的同学将获得0元。如果你和你的对手编码个数相等，则随机抽取一名同学作为获胜方。</p>
+<p>如有问题请举手，我们会为你解答。</p>
+
+<p>明白游戏规则的话，请按“下一页”开始选择</p>
+
+    {% next_button %}
+    
+
+{% endblock %}

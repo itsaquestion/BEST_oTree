@@ -1,0 +1,75 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    结果
+{% endblock %}
+
+{% block app_styles %}
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <p>实验结束。谢谢你的参与！</p>
+    <p>此次实验中，主-从工作协作中，你和他的选择如下：</p>
+
+    <table border="0">
+        <tr>
+            <th>你的选择</th>
+            <th>对方的选择</th>
+        </tr>
+        <tr>
+            <td>{{ c01_1 }}</td>
+            <td>{{ c01_2 }}</td>
+        </tr>
+        <tr>
+            <td>{{ c02_1 }}</td>
+            <td>{{ c02_2 }}</td>
+        </tr>
+        <tr>
+            <td>{{ c03_1 }}</td>
+            <td>{{ c03_2 }}</td>
+        </tr>
+        <tr>
+            <td>{{ c04_1 }}</td>
+            <td>{{ c04_2 }}</td>
+        </tr>
+        <tr>
+            <td>{{ c05_1 }}</td>
+            <td>{{ c05_2 }}</td>
+        </tr>
+    </table>
+    <p>电脑随机抽取了第<b>{{ player.pay_round }}</b>轮。</p>
+    <p>你的选择是<b>{{ role1 }}</b>，对方选择的是<b>{{ role2 }}</b>，
+        因此你获得的实验币为<b>{{ player.co_payoff_points }}</b>。</p>
+
+    <hr>
+    <p>
+        被随机抽取的赌局决策结果是第<b>{{ player.gamble_round }}</b>项，你的选择是<b>{{ gamble_choice }}</b>赌局。
+    因此，结果是：
+        {% if player.gamble_payoff_points >= 0 %}
+            你获得了<b>{{ player.gamble_payoff_points }}</b>个实验币。
+        {% else %}
+            你失去了<b>{{ player.gamble_payoff_points }}</b>个实验币。
+        {% endif %}</p>
+
+    <hr>
+    <p>你最后总共获得实验币<b>{{ player.total_payoff_points }}</b>，参与费为<b>{{ p_fee }}</b>元，
+        总共获得<b>{{ player.payoff }}</b>元</p>
+
+
+{% endblock %}
+
+
