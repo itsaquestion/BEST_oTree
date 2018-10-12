@@ -2,7 +2,7 @@ from otree.api import (
     models, widgets, BaseConstants, BaseSubsession, BaseGroup, BasePlayer,
     Currency as c, currency_range
 )
-# import numpy as np
+import numpy as np
 
 doc = """
 This is a one-shot "Prisoner's Dilemma". Two players are asked separately
@@ -20,8 +20,8 @@ def cal_random_rounds(low=8, high=13, size=9):
     :param size: 重新分组次数。
     :return: 一个List，包含具体分组的回合数。
     '''
-    break_points = np.random.randint(low, high, size=size);
-    break_points
+    break_points = np.random.randint(low, high, size=size)
+    # break_points
 
     np.mean(break_points)
 
@@ -54,7 +54,7 @@ class Subsession(BaseSubsession):
         # init
         if self.round_number == 1:
             self.session.vars['regroup_rounds'] = cal_random_rounds(low=2, high=5, size=2)
-            #self.session.vars['regroup_rounds'] = [4,6]
+            # self.session.vars['regroup_rounds'] = [4,6]
 
             for p in self.get_players():
                 p.participant.vars['total_payoff'] = 0
@@ -84,7 +84,7 @@ class Player(BasePlayer):
     total_payoff = models.CurrencyField()
 
     decision = models.StringField(
-        choices=['Cooperate', 'Defect'],
+        choices=['合作', '欺骗'],
         doc="""This player's decision""",
         widget=widgets.RadioSelect
     )
@@ -100,15 +100,15 @@ class Player(BasePlayer):
 
     def set_payoff(self):
         payoff_matrix = {
-            'Cooperate':
+            '合作':
                 {
-                    'Cooperate': Constants.both_cooperate_payoff,
-                    'Defect': Constants.betrayed_payoff
+                    '合作': Constants.both_cooperate_payoff,
+                    '欺骗': Constants.betrayed_payoff
                 },
-            'Defect':
+            '欺骗':
                 {
-                    'Cooperate': Constants.betray_payoff,
-                    'Defect': Constants.both_defect_payoff
+                    '合作': Constants.betray_payoff,
+                    '欺骗': Constants.both_defect_payoff
                 }
         }
 

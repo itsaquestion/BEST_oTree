@@ -15,7 +15,13 @@ class Decision(Page):
     def vars_for_template(self):
         regrouped = self.player.round_number in self.session.vars['regroup_rounds']
 
+        p_last = 0
+        if self.player.round_number > 1:
+            p_last = self.player.in_previous_rounds()[-1]
+
         return {
+            'p_last': p_last,
+            'player_in_all_rounds': self.player.in_all_rounds(),
             'player_in_previous_rounds': self.player.in_previous_rounds(),
             'regrouped': regrouped
         }
@@ -35,9 +41,15 @@ class Results(Page):
     def vars_for_template(self):
         me = self.player
 
+        t_profit_list = []
+
+        for p in self.session.get_participants():
+            t_profit_list.append(p.vars['total_payoff'])
+
         return {
             'player_in_all_rounds': self.player.in_all_rounds(),
-            'total_payoff': me.total_payoff
+            'total_payoff': me.total_payoff,
+            'max_payoff': max(t_profit_list)
         }
 
 

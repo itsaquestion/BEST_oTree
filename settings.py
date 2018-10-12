@@ -333,10 +333,17 @@ SESSION_CONFIGS = [
     },
     {
         'name': 'repeat_prisoner_debug',
-        'display_name': "Repeat Prisoner's Dilemma (debug)",
+        'display_name': "Repeat Prisoner's Dilemma (测试用)",
         'num_demo_participants': 2,
         'app_sequence': ['repeat_prisoner'],
         'debug_mode': True,
+    },
+    {
+        'name': 'repeat_prisoner',
+        'display_name': "Repeat Prisoner's Dilemma (正式用)",
+        'num_demo_participants': 2,
+        'app_sequence': ['repeat_prisoner'],
+        'debug_mode': False,
     },
     # {
     #     'name': 'survey',

@@ -2,18 +2,19 @@
 {% load otree %}
 
 {% block title %}
-    Results
+    结果
 {% endblock %}
 
 {% block content %}
 
+    <p>你的累积赢利是{{ player.total_payoff }}。全部参与人的最高累计赢利是{{ max_payoff }}。</p>
      <table class="table">
             <tr>
-                <th>Round</th>
-                <th>You Choice</th>
-                <th>Partner's Choice</th>
-                <th>Payoff</th>
-                <th>Total Payoff</th>
+                <th>轮次</th>
+                <th>你的选择</th>
+                <th>对手的选择</th>
+                <th>本轮赢利</th>
+                <th>累计赢利</th>
             </tr>
             {% for p in player_in_all_rounds %}
                 <tr>

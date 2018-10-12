@@ -41,65 +41,74 @@
 {% block content %}
 
     {% if regrouped %}
-        <h4 style="color:Red;"> Rematched</h4>
+        <h4 style="color:Red;"> 已重新匹配对手。</h4>
     {% endif %}
 
-    <h3> Round: {{ player.round_number }}</h3>
+    <h3> 第{{ player.round_number }}轮</h3>
 
-    <h2> Your Choice </h2>
+    <h2> 你的选择 </h2>
 
-    <div class="div-a">
-        <div class="form-group required">
-            <table class="table table-bordered text-center" style="width: auto; margin: auto">
-                <tr>
-                    <th colspan="2" rowspan="2"></th>
-                    <th colspan="2">The Other Participant</th>
-                </tr>
-                <tr>
-                    <th>Cooperate</th>
-                    <th>Defect</th>
-                </tr>
-                <tr class="highlight-row-on-hover">
-                    <th rowspan="2"><span class="rotate90">You</span></th>
-                    <td>
-                        <button name="decision" value="Cooperate" class="btn btn-primary btn-large">I will cooperate
-                        </button>
-                    </td>
-                    <td>{{ Constants.both_cooperate_payoff }}, {{ Constants.both_cooperate_payoff }}</td>
-                    <td>{{ Constants.betrayed_payoff }}, {{ Constants.betray_payoff }}</td>
-                </tr>
-                <tr class="highlight-row-on-hover">
-                    <td>
-                        <button name="decision" value="Defect" class="btn btn-primary btn-large">I will defect</button>
-                    </td>
-                    <td>{{ Constants.betray_payoff }}, {{ Constants.betrayed_payoff }}</td>
-                    <td>{{ Constants.both_defect_payoff }}, {{ Constants.both_defect_payoff }}</td>
-                </tr>
-            </table>
-        </div>
-    </div>
-
-    <div class="div-b" id="info"></div>
-
-    <table class="table">
-        <tr>
-            <th>Round</th>
-            <th>You Choice</th>
-            <th>Partner's Choice</th>
-            <th>Payoff</th>
-            <th>Total Payoff</th>
-        </tr>
-        {% for p in player_in_previous_rounds %}
+    <div class="form-group required">
+        <table class="table table-bordered text-center" style="width: auto; margin: auto">
             <tr>
-                <td>{{ p.round_number }}</td>
-                <td>{{ p.decision }}</td>
-                <td>{{ p.partner_decision }}</td>
-                <td>{{ p.payoff }}</td>
-                <td>{{ p.total_payoff }}</td>
-
+                <th colspan="2" rowspan="2"></th>
+                <th colspan="2">对手</th>
             </tr>
-        {% endfor %}
-    </table>
+            <tr>
+                <th>合作</th>
+                <th>欺骗</th>
+            </tr>
+            <tr class="highlight-row-on-hover">
+                <th rowspan="2"><span class="rotate90">你</span></th>
+                <td>
+                    <button name="decision" value="合作" class="btn btn-primary btn-large">我选择合作
+                    </button>
+                </td>
+                <td>{{ Constants.both_cooperate_payoff }}, {{ Constants.both_cooperate_payoff }}</td>
+                <td>{{ Constants.betrayed_payoff }}, {{ Constants.betray_payoff }}</td>
+            </tr>
+            <tr class="highlight-row-on-hover">
+                <td>
+                    <button name="decision" value="欺骗" class="btn btn-primary btn-large">我选择欺骗</button>
+                </td>
+                <td>{{ Constants.betray_payoff }}, {{ Constants.betrayed_payoff }}</td>
+                <td>{{ Constants.both_defect_payoff }}, {{ Constants.both_defect_payoff }}</td>
+            </tr>
+        </table>
     </div>
+
+    <hr>
+    {% if player.round_number > 1 %}
+        <p style="text-align:center">
+            你上一轮的选择是：{{ p_last.decision }} <br>
+            对手上一轮的选择是：{{ p_last.partner_decision }} <br>
+            你上一轮的赢利是：{{ p_last.payoff }} <br>
+            你的累计赢利是：{{ p_last.total_payoff }}
+        </p>
+
+    {% endif %}
+
+    {% if session.vars.is_debug == True %}
+        <h4 style="color:Red;"> Debug Info</h4>
+        <table class="table">
+            <tr>
+                <th>Round</th>
+                <th>You Choice</th>
+                <th>Partner's Choice</th>
+                <th>Payoff</th>
+                <th>Total Payoff</th>
+            </tr>
+            {% for p in player_in_previous_rounds %}
+                <tr>
+                    <td>{{ p.round_number }}</td>
+                    <td>{{ p.decision }}</td>
+                    <td>{{ p.partner_decision }}</td>
+                    <td>{{ p.payoff }}</td>
+                    <td>{{ p.total_payoff }}</td>
+
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
 
 {% endblock %}
