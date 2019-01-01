@@ -301,7 +301,9 @@ SESSION_CONFIGS = [
         'Treatment_compete_wl': True,
         'Treatment_compete_wl_practice': True,
         'Treatment_compete_wl_practice_reward': True,
-        'Treatment_compete_wl_reward': True,
+        'Treatment_compete_wl_reward_showafter': True,
+        'Treatment_choice_wl_tips': True,
+        'Treatment_compete_wl_tips': True,
         'points_for_one_yuan': 10,
         'correct_threshold': 10,
         'game_time_sec': 480,
@@ -322,7 +324,9 @@ SESSION_CONFIGS = [
         'Treatment_compete_wl': True,
         'Treatment_compete_wl_practice': True,
         'Treatment_compete_wl_practice_reward': True,
-        'Treatment_compete_wl_reward': True,
+        'Treatment_compete_wl_reward_showafter': True,
+        'Treatment_choice_wl_tips': True,
+        'Treatment_compete_wl_tips': True,
         'points_for_one_yuan': 10,
         'correct_threshold': 10,
         'game_time_sec': 15,
@@ -345,6 +349,18 @@ SESSION_CONFIGS = [
         'app_sequence': ['repeat_prisoner'],
         'debug_mode': False,
     },
+    {
+        'name': 'coase_debug',
+        'display_name': "Coase Theorem Debug",
+        'num_demo_participants': 24,
+        'app_sequence': [
+            'Coase'
+        ],
+        'points_for_one_yuan': 10,
+        'game_time_sec': 15,
+        'debug_mode': True,
+        'participation_fee': 15,
+    }
     # {
     #     'name': 'survey',
     #     'display_name': "Survey",

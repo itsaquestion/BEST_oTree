@@ -56,72 +56,16 @@
 {% block content %}
     <div>
         <div class="div-a">
-            <p>
-                {% if has_reward %}
-                    本场游戏的<b>{{ Constants.label_winner }}</b>将得到{{ Constants.winners_reward }}个实验币的奖励。游戏结果决定你们进入下一场游戏的身份。
-                {% else %}
-                    本场游戏没有报酬，但游戏结果决定你们进入下一场游戏的身份。
-                {% endif %}
-            </p>
-            <p>你和你的对手将进行一场竞赛，竞赛的内容是在<b>{{ timeout_string }}</b>内完成尽可能多的数零任务。</p>
-            <p>具体地，游戏开始后，你会看到类似右边的数字表（{{ session.vars.matrix_y }}行*{{ session.vars.matrix_x }}列）。
-                你要尽快数完其中<b>0</b>的个数，填入表格下方空格，然后点击OK按钮确认。</p>
-            <p>如果你输入的答案正确，电脑会自动生成一个新的图表，同时已完成任务的数量将增加。</p>
-            <p>如果你输入的答案错误，你还有另外的两次机会重新输入答案（所以共有三次机会）。
-                你只要在三次机会中输入正确答案一次，即被判为正确。如果在同一张图表中，三次输入均不正确，
-                电脑将更换图表，但已完成任务的数量不会增加。</p>
-            <p>在{{ timeout_string }}后，竞赛会自动终止。</p>
 
+            {% if player.treatment != 'compete_wl_reward_showafter' %}
 
-            <p>• 完成任务数量更多的一方，将被判为“<b>{{ Constants.label_winner }}</b>”，
-                以“<b>{{ Constants.label_winner }}</b>”的身份进入第二场游戏；</p>
-            <p>• 完成任务数量更少的一方，将被判为“<b>{{ Constants.label_loser }}</b>”，
-                以“<b>{{ Constants.label_loser }}</b>”的身份进入第二场游戏。</p>
-            <p>• 若平局，则会随机判为“<b>{{ Constants.label_winner }}</b>”或者“<b>{{ Constants.label_loser }}</b>”的身份进入第二场游戏。
-            </p>
+                {% include "informal_authority/IdentityCompeteIntro_content_t345.html" %}
 
+            {% else %}
 
-            {% if show_next_info %}
-                <p>
-                    在第二场游戏中，你将以“<b>{{ Constants.label_winner }}</b>”或“<b>{{ Constants.label_loser }}</b>”身份和与你匹配的对手进行五场协调博弈。在每场协调博弈中，
-                    你都可以选择做“主”角色或者做“从”角色；你的对手也可以选择做“主”角色或“从”角色。如果你俩对角色选择是不同的，
-                    则协调成功；如果你俩对角色选择是相同的，则协调失败。换言之，只有“一主一从”或“一从一主”才算协调成功；
-                    如果都选了“主”或者都选了“从”，则协调失败。</p>
-                <p>
-                    如果协调成功，则双方可以分享600个实验币，“主”角色vs“从”角色在五场协调中的实验币分享数量分别是：
+               {% include "informal_authority/IdentityCompeteIntro_content_t6.html" %}
 
-                <table class="table">
-                    <tr>
-                        <th>“主”角色</th>
-                        <th>“从”角色</th>
-                    </tr>
-                    <tr>
-                        <td>300</td>
-                        <td>300</td>
-                    </tr>
-                    <tr>
-                        <td>350</td>
-                        <td>250</td>
-                    </tr>
-                    <tr>
-                        <td>400</td>
-                        <td>200</td>
-                    </tr>
-                    <tr>
-                        <td>450</td>
-                        <td>150</td>
-                    </tr>
-                    <tr>
-                        <td>500</td>
-                        <td>100</td>
-                    </tr>
-
-                </table>
-                （五场出现的顺序是随机的）。如果协调失败，则双方都只能得到0个实验币（即什么都得不到）。</p>
             {% endif %}
-
-            <p>现在，我们开始数零任务。</p>
-
 
             {% next_button %}
         </div>

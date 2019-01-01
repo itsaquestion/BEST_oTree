@@ -1,3 +1,6 @@
+
+
+
 {% extends "informal_authority/IdentityChoiceBase.html" %}
 {% load staticfiles otree %}
 
@@ -8,23 +11,15 @@
 {% block content %}
 
 
+            {% if player.treatment != 'compete_wl_reward_showafter' %}
 
-    {% if is_compete %}
-        <p>你完成<b>{{ correct_self }}</b>次，他完成<b>{{ correct_partner }}</b>次，
-            {% if is_winner %}
-                你获胜。{% if has_reward %}恭喜你，你在本次获得50个实验币奖励。{% endif %}
+                {% include "informal_authority/ShowLabel_content_t1_t5.html" %}
+
             {% else %}
-                他获胜。{% if has_reward %}很遗憾，你在本次得不到任何奖励。{% endif %}
+
+               {% include "informal_authority/ShowLabel_content_t6.html" %}
+
             {% endif %}
-
-
-        </p>
-        <p>因此，接下来你以<b>{{ label_self }} </b>，他以<b>{{ label_partner }}</b>身份进入下一阶段任务中。</p>
-    {% else %}
-        <p>你的选择是：<b>{{ choice_self }}</b>，他的选择是：<b>{{ choice_partner }}</b>。</p>
-        <p>因此，你将以 <b>{{ label_self }} </b>进入下一阶段任务，他将以 <b>{{ label_partner }}</b> 进入下一阶段任务。</p>
-    {% endif %}
-
 
 
     {% next_button %}

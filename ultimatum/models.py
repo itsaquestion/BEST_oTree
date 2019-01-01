@@ -81,7 +81,6 @@ class Group(BaseGroup):
     response_100 = models.BooleanField(
         widget=widgets.RadioSelectHorizontal, verbose_name=question(100))
 
-
     def set_payoffs(self):
         p1, p2 = self.get_players()
 

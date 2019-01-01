@@ -1,0 +1,18 @@
+<p>你完成<b>{{ correct_self }}</b>次，他完成<b>{{ correct_partner }}</b>次，
+
+    {% if is_winner %}
+        你获胜。</p>
+        <p style="color:red;">我们将对本阶段的胜方奖励{{ Constants.winners_reward }}个实验币。
+            所以，恭喜你，你获得了{{ Constants.winners_reward }}个实验币作为胜方奖励；你的对手作为败方未得到任何奖励。</p>
+    {% else %}
+        他获胜。</p>
+        <p style="color:red;">我们将对本阶段的胜方奖励{{ Constants.winners_reward }}个实验币。
+            所以，很遗憾，你得不到这个奖励；而你的对手则获得{{ Constants.winners_reward }}个实验币作为胜方奖励。
+        </p>
+    {% endif %}
+
+</p>
+
+<p>因此，接下来你以<b>{{ label_self }} </b>，他以<b>{{ label_partner }}</b>身份进入下一阶段任务中。</p>
+
+

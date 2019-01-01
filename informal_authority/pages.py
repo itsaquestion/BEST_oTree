@@ -80,7 +80,7 @@ class IdentityChoiceColor(Page):
     form_fields = ['id_choice_01']
 
     def is_displayed(self):
-        return self.player.treatment == "choice_color"
+        return 'choice_color' in self.player.treatment
 
     def vars_for_template(self):
         if self.player.id_in_group == 1:
@@ -100,7 +100,7 @@ class IdentityChoiceWl(Page):
     form_fields = ['id_choice_01']
 
     def is_displayed(self):
-        return self.player.treatment == "choice_wl"
+        return "choice_wl" in self.player.treatment
 
     def vars_for_template(self):
         if self.player.id_in_group == 1:
@@ -133,7 +133,9 @@ class ShowLabel(Page):
 
             'is_compete': is_treatment_compete(self),
             'is_winner': self.player.label == "胜方",
-            'has_reward': 'reward' in self.player.treatment
+            'has_reward': 'reward' in self.player.treatment,
+
+            'reward_show_after': self.player.is_reward_show_after()
         }
 
 
@@ -217,7 +219,7 @@ class IdentityCompeteGame(Page):
 
 class IdentityCompeteIntro(Page):
     def is_displayed(self):
-        return self.group.treatment.startswith("compete")
+        return is_treatment_compete(self)
 
     def vars_for_template(self):
         m, s = divmod(self.session.config['game_time_sec'], 60)
@@ -229,7 +231,8 @@ class IdentityCompeteIntro(Page):
         return_vars = {
             'correct_threshold': self.session.vars['correct_threshold'],
             'show_next_info': show_next_info,
-            'has_reward': has_reward
+            'has_reward': has_reward,
+            'reward_show_after': self.player.is_reward_show_after()
         }
 
         if m > 0:
@@ -241,7 +244,7 @@ class IdentityCompeteIntro(Page):
 
 
 def is_treatment_compete(page):
-    return page.player.treatment.startswith("compete")
+    return "compete" in page.player.treatment
 
 
 class Survey01(Page):
@@ -287,25 +290,52 @@ class TreatmentSelectionWaitPage(WaitPage):
         return self.session.config['debug_mode']  # and self.player.id_in_group == 2
 
 
+class CoordinationTips(Page):
+
+    def vars_for_template(self):
+        # 返回本人标签和推荐角色
+        label = self.player.label
+        role = '主角色'
+        if self.player.label == Constants.label_loser:
+            role = '从角色'
+
+        return {"label": label, "role": role}
+
+    def is_displayed(self):
+        return "tips" in self.player.treatment
+
+
 page_sequence = [
 
+    # debug用treatment选择
     TreatmentSelection,
     TreatmentSelectionWaitPage,
 
+    # 导言
     Introduction,
 
+    # 选择01
     IdentityChoiceColor,
     IdentityChoiceWl,
 
+    # 数0竞赛
     IdentityCompeteIntro,
     # IdentityCompeteIntroPractice,
     IdentityCompeteGame,
 
     IdentityWaitPage,
+
+    # 展示你的lable（输赢或者颜色）
     ShowLabel,
 
     NormalWaitPage,
+
+    #  第二阶段：“工作协作”
     CoordinationTest,
+
+    # t7，t8要给予选择的提示
+    CoordinationTips,
+
     CoordinationChoice01,
     CoordinationChoice02,
     CoordinationChoice03,
@@ -313,6 +343,7 @@ page_sequence = [
     CoordinationChoice05,
     CoordinationResult,
 
+    # 调查
     Survey01,
     Survey02,
     Survey03,

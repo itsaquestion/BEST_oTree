@@ -84,6 +84,7 @@ class Subsession(BaseSubsession):
 
         # 循环设定treatment ====
         if self.round_number == 1:
+
             # 循环设定treatment
             n = len(all_treatments)
             for g in self.get_groups():
@@ -107,10 +108,10 @@ class Group(BaseGroup):
         p1 = self.get_player_by_id(1)
         p2 = self.get_player_by_id(2)
 
-        if self.treatment == "choice_color":
+        if self.treatment.startswith("choice_color"):
             self.set_label_choice_color()
 
-        if self.treatment == "choice_wl":
+        if self.treatment.startswith("choice_wl"):
             self.set_label_choice_wl()
 
         if self.treatment.startswith("compete_wl"):
@@ -201,8 +202,33 @@ class Group(BaseGroup):
             p2.label = Constants.label_winner
 
 
+def make_survey_field(n: int):
+    return models.StringField(
+        choices=['接受', '拒绝'],
+        verbose_name=make_question_string(n),
+        widget=widgets.RadioSelectHorizontal
+    )
+
+
+def make_role_choice_field():
+    return models.StringField(
+        widget=widgets.RadioSelectHorizontal,
+        choices=['"主"角色', '"从"角色']
+    )
+
+
+def make_project_choice_field():
+    return models.StringField(
+        verbose_name="你会选择",
+        choices=['项目1', '项目2', '项目3'],
+        widget=widgets.RadioSelectHorizontal
+    )
+
+
 class Player(BasePlayer):
     treatment = models.StringField(widget=widgets.RadioSelect)
+
+    # 双方的身份标签
     label = models.StringField()
     label_partner = models.StringField()
 
@@ -221,30 +247,18 @@ class Player(BasePlayer):
         choices=[0, 1]
     )
 
-    co_choice_01 = models.StringField(
-        widget=widgets.RadioSelectHorizontal,
-        choices=['"主"角色', '"从"角色']
-    )
+    co_choice_01 = make_role_choice_field()
 
-    co_choice_02 = models.StringField(
-        widget=widgets.RadioSelectHorizontal,
-        choices=['"主"角色', '"从"角色']
-    )
+    co_choice_02 = make_role_choice_field()
 
-    co_choice_03 = models.StringField(
-        widget=widgets.RadioSelectHorizontal,
-        choices=['"主"角色', '"从"角色']
-    )
+    co_choice_03 = make_role_choice_field()
 
-    co_choice_04 = models.StringField(
-        widget=widgets.RadioSelectHorizontal,
-        choices=['"主"角色', '"从"角色']
-    )
+    co_choice_04 = make_role_choice_field()
 
-    co_choice_05 = models.StringField(
-        widget=widgets.RadioSelectHorizontal,
-        choices=['"主"角色', '"从"角色']
-    )
+    co_choice_05 = make_role_choice_field()
+
+    def is_reward_show_after(self):
+        return 'showafter' in self.treatment
 
     def set_payoff(self):
         self.pay_round = random.choice([1, 2, 3, 4, 5])
@@ -276,48 +290,23 @@ class Player(BasePlayer):
         else:
             self.gamble_payoff_points = get_list[(self.gamble_round - 1)]
 
+    # 以下是survey 用变量 ================================================
 
-# 以下是survey 用变量 ================================================
+    sur_q01 = make_survey_field(1)
 
-    sur_q01 = models.StringField(
-        choices=['接受', '拒绝'],
-        verbose_name=make_question_string(1),
-        widget=widgets.RadioSelectHorizontal)
+    sur_q02 = make_survey_field(2)
 
-    sur_q02 = models.StringField(
-        choices=['接受', '拒绝'],
-        verbose_name=make_question_string(2),
-        widget=widgets.RadioSelectHorizontal)
+    sur_q03 = make_survey_field(3)
 
-    sur_q03 = models.StringField(
-        choices=['接受', '拒绝'],
-        verbose_name=make_question_string(3),
-        widget=widgets.RadioSelectHorizontal)
+    sur_q04 = make_survey_field(4)
 
-    sur_q04 = models.StringField(
-        choices=['接受', '拒绝'],
-        verbose_name=make_question_string(4),
-        widget=widgets.RadioSelectHorizontal)
+    sur_q05 = make_survey_field(5)
 
-    sur_q05 = models.StringField(
-        choices=['接受', '拒绝'],
-        verbose_name=make_question_string(5),
-        widget=widgets.RadioSelectHorizontal)
+    sur_q06 = make_survey_field(6)
 
-    sur_q06 = models.StringField(
-        choices=['接受', '拒绝'],
-        verbose_name=make_question_string(6),
-        widget=widgets.RadioSelectHorizontal)
+    sur_q07 = make_survey_field(7)
 
-    sur_q07 = models.StringField(
-        choices=['接受', '拒绝'],
-        verbose_name=make_question_string(7),
-        widget=widgets.RadioSelectHorizontal)
-
-    sur_q08 = models.StringField(
-        choices=['接受', '拒绝'],
-        verbose_name=make_question_string(8),
-        widget=widgets.RadioSelectHorizontal)
+    sur_q08 = make_survey_field(8)
 
     sur_birth_year = models.IntegerField(verbose_name="你出生的年份是")
     sur_birth_month = models.IntegerField(verbose_name="你出生的月份是(1-12)", min=1, max=12)
@@ -342,30 +331,8 @@ class Player(BasePlayer):
         widget=widgets.RadioSelectHorizontal
     )
 
-    sur_project_01 = models.StringField(
-        verbose_name="你会选择",
-        choices=['项目1', '项目2', '项目3'],
-        widget=widgets.RadioSelectHorizontal
-    )
-    sur_project_02 = models.StringField(
-        verbose_name="你会选择",
-        choices=['项目1', '项目2', '项目3'],
-        widget=widgets.RadioSelectHorizontal
-    )
-    sur_project_03 = models.StringField(
-        verbose_name="你会选择",
-        choices=['项目1', '项目2', '项目3'],
-        widget=widgets.RadioSelectHorizontal
-    )
-    sur_project_04 = models.StringField(
-        verbose_name="你会选择",
-        choices=['项目1', '项目2', '项目3'],
-        widget=widgets.RadioSelectHorizontal
-    )
-    sur_project_05 = models.StringField(
-        verbose_name="你会选择",
-        choices=['项目1', '项目2', '项目3'],
-        widget=widgets.RadioSelectHorizontal
-    )
-
-
+    sur_project_01 = make_project_choice_field()
+    sur_project_02 = make_project_choice_field()
+    sur_project_03 = make_project_choice_field()
+    sur_project_04 = make_project_choice_field()
+    sur_project_05 = make_project_choice_field()
