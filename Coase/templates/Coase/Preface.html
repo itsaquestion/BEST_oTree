@@ -1,4 +1,4 @@
-{% extends "global/Page.html" %}
+{% extends "Coase/PageBase.html" %}
 {% load otree static %}
 
 {% block title %}
@@ -21,6 +21,8 @@
 
 
     {% next_button %}
+
+    {% include 'Coase/DebugBlock.html' %}
 {% endblock %}
 
 

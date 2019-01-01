@@ -16,30 +16,42 @@ class Results(Page):
     pass
 
 
-class Intro(Page):
-    pass
+class IntroCorp(Page):
+    def is_displayed(self):
+        return self.player.the_role == "corp"
 
 
-class CorpOffer(Page):
+class IntroRes(Page):
+    def is_displayed(self):
+        return self.player.the_role == "res"
+
+
+class OfferCorp(Page):
     form_model = 'player'
     form_fields = ['corp_price']
 
     def is_displayed(self):
-        return self.player.role() == "corp"
+        return self.player.the_role == "corp"
 
 
-class ResOffer(Page):
+class OfferRes(Page):
     form_model = 'player'
     form_fields = ['res_price']
 
     def is_displayed(self):
-        return self.player.role() == "res"
+        return self.player.the_role == "res"
+
+
+class Preface(Page):
+    pass
 
 
 page_sequence = [
-    Intro,
-    CorpOffer,
-    ResOffer,
+    Preface,
+    IntroCorp,
+    IntroRes,
+    OfferCorp,
+    OfferRes,
     ResultsWaitPage,
     Results
 ]

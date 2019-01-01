@@ -29,6 +29,10 @@ class Constants(BaseConstants):
 class Subsession(BaseSubsession):
     def creating_session(self):
 
+        self.session.vars['is_debug'] = self.session.config['debug_mode']
+        self.session.vars['points_for_one_yuan'] = self.session.config['points_for_one_yuan']
+        self.session.vars['participation_fee'] = self.session.config['participation_fee']
+
         # 11轮和21轮，组内乱序。其余按上一轮。
         if self.round_number in [11, 21]:
             gm = self.get_group_matrix()
@@ -37,7 +41,6 @@ class Subsession(BaseSubsession):
 
         elif self.round_number > 1:
             self.group_like_round(self.round_number - 1)
-
 
         # 初始的treatment顺序列表，表示每个10轮的起始（G1）的treatment
         # 即：1，11，21轮开始的G1的treatment
@@ -89,6 +92,8 @@ class Subsession(BaseSubsession):
 
 class Group(BaseGroup):
     treatment = models.StringField()
+    init_property = models.StringField()
+    res_number = models.IntegerField()
 
     # 无产权的一方出价，高于对方出价，则deal = True，以无产权方出价为准
     def set_payoff(self):
@@ -111,6 +116,17 @@ def set_treatment(g: Group, treatment: str):
     :return: none
     """
     g.treatment = treatment
+
+    if "corp" in treatment:
+        g.init_property = "corp"
+    else:
+        g.init_property = "res"
+
+    if "1" in treatment:
+        g.res_number = 1
+    else:
+        g.res_number = 3
+
     for p in g.get_players():
         p.treatment = treatment
 

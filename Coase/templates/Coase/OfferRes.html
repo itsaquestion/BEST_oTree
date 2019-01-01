@@ -1,4 +1,4 @@
-{% extends "global/Page.html" %}
+{% extends "Coase/PageBase.html" %}
 {% load otree static %}
 
 {% block title %}
@@ -7,9 +7,8 @@
 
 {% block content %}
 
-    你是企业，选择一个价钱。
-
+    你是居民，选择一个价钱。
 
     {% next_button %}
-
+    {% include 'Coase/DebugBlock.html' %}
 {% endblock %}

@@ -1,0 +1,18 @@
+{% block content %}
+
+    {% if session.vars.is_debug == True %}
+    <hr>
+        <h4 style="color:Red;"> Debug 信息</h4>
+        GID: {{ player.gid }}
+        <br>
+        Treatment: {{ player.treatment }}
+        <br>
+        Role: {{ player.role }}
+        <br>
+        Num of residents: {{ group.res_number }}
+        <br>
+        Initial property: {{ group.init_property }}
+    {% endif %}
+{% endblock %}
+
+
