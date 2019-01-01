@@ -350,9 +350,21 @@ SESSION_CONFIGS = [
         'debug_mode': False,
     },
     {
-        'name': 'coase_debug',
-        'display_name': "Coase Theorem Debug",
+        'name': 'coase_debug_24',
+        'display_name': "Coase Theorem (Debug 24P)",
         'num_demo_participants': 24,
+        'app_sequence': [
+            'Coase'
+        ],
+        'points_for_one_yuan': 10,
+        'game_time_sec': 15,
+        'debug_mode': True,
+        'participation_fee': 15,
+    },
+    {
+        'name': 'coase_debug_8',
+        'display_name': "Coase Theorem (Debug 8P)",
+        'num_demo_participants': 8,
         'app_sequence': [
             'Coase'
         ],

@@ -28,7 +28,6 @@ class Constants(BaseConstants):
 
 class Subsession(BaseSubsession):
     def creating_session(self):
-        # 1,11,21轮换treatment + 组内
 
         # 11轮和21轮，组内乱序。其余按上一轮。
         if self.round_number in [11, 21]:
@@ -39,38 +38,38 @@ class Subsession(BaseSubsession):
         elif self.round_number > 1:
             self.group_like_round(self.round_number - 1)
 
-        # 先定义每个组的treatment = treatment_list
-        # 5轮swap，10轮shift(2)
-        treatment_list: List[str] = ['corp_1', 'corp_3', 'corp_3']
 
-        gs: List[Group] = self.get_groups()
+        # 初始的treatment顺序列表，表示每个10轮的起始（G1）的treatment
+        # 即：1，11，21轮开始的G1的treatment
+        # 对于G2，G3等等，利用oh.shift()对这个treatment列表进行平移即可
+
+        treatment_list_base: List[str] = ['corp_1', 'corp_3', 'corp_3']
+        treatment_list_base_swap: List[str] = ['res_1', 'res_3', 'res_3']
 
         t1 = 'corp'
         t2 = 'res'
 
-        if self.round_number in range(1, 6):
-            # 1 ~ 5：原版
-            apply_treatment(gs, treatment_list)
+        g: Group
+        for gid, g in enumerate(self.get_groups()):
+            treatment_list = oh.shift(treatment_list_base, gid)
+            treatment_list_swap = oh.shift(treatment_list_base_swap, gid)
+            if self.round_number in range(1, 6):
+                set_treatment(g, treatment_list[0])
 
-        elif self.round_number in range(6, 11):
-            # 6 ~ 10：原版 + 对换产权
-            apply_treatment(gs, oh.swap_str(treatment_list, t1, t2))
+            elif self.round_number in range(6, 11):
+                set_treatment(g, treatment_list_swap[0])
 
-        elif self.round_number in range(11, 16):
-            # 11 ~ 15：原版 + 平移1格
-            apply_treatment(gs, oh.shift(treatment_list, 1))
+            elif self.round_number in range(11, 16):
+                set_treatment(g, treatment_list[1])
 
-        elif self.round_number in range(16, 21):
-            # 11 ~ 15：原版 + 平移1格 + 对换产权
-            apply_treatment(gs, oh.swap_str(oh.shift(treatment_list, 1), t1, t2))
+            elif self.round_number in range(16, 21):
+                set_treatment(g, treatment_list_swap[1])
 
-        elif self.round_number in range(21, 26):
-            # 21 ~ 25：原版 + 平移2格
-            apply_treatment(gs, oh.shift(treatment_list, 2))
-        else:
-            # 26 ~ ：原版 + 平移2格 + 对换产权
-            apply_treatment(gs, oh.swap_str(oh.shift(treatment_list, 2), t1, t2))
+            elif self.round_number in range(21, 26):
+                set_treatment(g, treatment_list[2])
 
+            else:
+                set_treatment(g, treatment_list_swap[2])
 
         # 把role保存起来
         for p in self.get_players():
@@ -83,9 +82,10 @@ class Subsession(BaseSubsession):
             self.set_group_matrix(new_gm)
 
         # 生成GID
-        for gid, g in enumerate(gs):
+        for gid, g in enumerate(self.get_groups()):
             for p in g.get_players():
                 p.gid = (gid + 1) * 10 + p.id_in_group
+
 
 class Group(BaseGroup):
     treatment = models.StringField()
@@ -103,12 +103,13 @@ class Group(BaseGroup):
             res_price = sum(p.offer for p in self.get_players_by_role("res"))
 
 
-def apply_treatment(gs: List[Group], treatment_list: List[str]):
-    for gid, g in enumerate(gs):
-        set_treatment(g, treatment_list[gid])
-
-
 def set_treatment(g: Group, treatment: str):
+    """
+    把treatment:str写入Group以及其下的Players的treatement属性里
+    :param g: a Group
+    :param treatment: the treatment string
+    :return: none
+    """
     g.treatment = treatment
     for p in g.get_players():
         p.treatment = treatment
