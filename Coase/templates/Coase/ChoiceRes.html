@@ -1,0 +1,23 @@
+{% extends "Coase/_PageBase.html" %}
+{% load otree static %}
+
+{% block title %}
+    第 {{ group.subgame_counter }} 轮谈判
+{% endblock %}
+
+{% block content %}
+
+    {% if group.init_property == 'corp' %}
+        <p>你最多愿意补偿给企业
+            <input type="number" name="res_price" min="0" max="10" required id="id_res_price"/>
+            元（请填整数），让企业放弃开办新工厂？</p>
+
+    {% else %}
+        <p>企业最少需要补偿给你
+            <input type="number" name="res_price" min="0" max="10" required id="id_res_price"/>
+            元（请填整数），你才同意企业开办新工厂？</p>
+    {% endif %}
+    {% next_button %}
+    {{ form.res_price.errors }}
+    {% include 'Coase/DebugBlock.html' %}
+{% endblock %}

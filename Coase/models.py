@@ -29,9 +29,16 @@ class Constants(BaseConstants):
 class Subsession(BaseSubsession):
     def creating_session(self):
 
+        # =================================================================
+        # 读取全局设置
+        # =================================================================
         self.session.vars['is_debug'] = self.session.config['debug_mode']
         self.session.vars['points_for_one_yuan'] = self.session.config['points_for_one_yuan']
         self.session.vars['participation_fee'] = self.session.config['participation_fee']
+
+        # =================================================================
+        # 分组和treatment设置
+        # =================================================================
 
         # 11轮和21轮，组内乱序。其余按上一轮。
         if self.round_number in [11, 21]:
@@ -42,41 +49,7 @@ class Subsession(BaseSubsession):
         elif self.round_number > 1:
             self.group_like_round(self.round_number - 1)
 
-        # 初始的treatment顺序列表，表示每个10轮的起始（G1）的treatment
-        # 即：1，11，21轮开始的G1的treatment
-        # 对于G2，G3等等，利用oh.shift()对这个treatment列表进行平移即可
-
-        treatment_list_base: List[str] = ['corp_1', 'corp_3', 'corp_3']
-        treatment_list_base_swap: List[str] = ['res_1', 'res_3', 'res_3']
-
-        t1 = 'corp'
-        t2 = 'res'
-
-        g: Group
-        for gid, g in enumerate(self.get_groups()):
-            treatment_list = oh.shift(treatment_list_base, gid)
-            treatment_list_swap = oh.shift(treatment_list_base_swap, gid)
-            if self.round_number in range(1, 6):
-                set_treatment(g, treatment_list[0])
-
-            elif self.round_number in range(6, 11):
-                set_treatment(g, treatment_list_swap[0])
-
-            elif self.round_number in range(11, 16):
-                set_treatment(g, treatment_list[1])
-
-            elif self.round_number in range(16, 21):
-                set_treatment(g, treatment_list_swap[1])
-
-            elif self.round_number in range(21, 26):
-                set_treatment(g, treatment_list[2])
-
-            else:
-                set_treatment(g, treatment_list_swap[2])
-
-        # 把role保存起来
-        for p in self.get_players():
-            p.the_role = p.role()
+        set_treatment_for_all(self.get_groups(), self.round_number)
 
         # 保留角色重排
         if self.round_number in [6, 16, 26]:
@@ -84,13 +57,29 @@ class Subsession(BaseSubsession):
             new_gm = oh.shuffle_in_groups_by_role(gm, "res")
             self.set_group_matrix(new_gm)
 
+            # 重排后还要重设一下group的treatment信息
+            set_treatment_for_all(self.get_groups(), self.round_number)
+
+        # =================================================================
+        # 生成和保留信息
+        # =================================================================
+
+        # 把role保存起来
+        for p in self.get_players():
+            p.the_role = p.role()
+
         # 生成GID
         for gid, g in enumerate(self.get_groups()):
             for p in g.get_players():
                 p.gid = (gid + 1) * 10 + p.id_in_group
 
+        # 生成subgame_counter
+        for g in self.get_groups():
+            g.subgame_counter = (self.round_number - 1) % 5 + 1
+
 
 class Group(BaseGroup):
+    subgame_counter = models.IntegerField()
     treatment = models.StringField()
     init_property = models.StringField()
     res_number = models.IntegerField()
@@ -131,12 +120,51 @@ def set_treatment(g: Group, treatment: str):
         p.treatment = treatment
 
 
-def res_offer_field():
+def set_treatment_for_all(gs: List[Group], round_number: int):
+    """
+    初始的treatment顺序列表，表示每个10轮的起始（G1）的treatment
+    即：1，11，21轮开始的G1的treatment
+    对于G2，G3等等，利用oh.shift()对这个treatment列表进行平移即可
+    :param gs:
+    :param round_number:
+    :return:
+    """
+
+    treatment_list_base: List[str] = ['corp_1', 'corp_3', 'corp_3']
+    treatment_list_base_swap: List[str] = ['res_1', 'res_3', 'res_3']
+
+    t1 = 'corp'
+    t2 = 'res'
+
+    g: Group
+    for gid, g in enumerate(gs):
+        treatment_list = oh.shift(treatment_list_base, gid)
+        treatment_list_swap = oh.shift(treatment_list_base_swap, gid)
+        if round_number in range(1, 6):
+            set_treatment(g, treatment_list[0])
+
+        elif round_number in range(6, 11):
+            set_treatment(g, treatment_list_swap[0])
+
+        elif round_number in range(11, 16):
+            set_treatment(g, treatment_list[1])
+
+        elif round_number in range(16, 21):
+            set_treatment(g, treatment_list_swap[1])
+
+        elif round_number in range(21, 26):
+            set_treatment(g, treatment_list[2])
+
+        else:
+            set_treatment(g, treatment_list_swap[2])
+
+
+def res_price_field():
     # 居民offer，上限是居民endowment
     return models.IntegerField(min=0, max=Constants.res_endowment)
 
 
-def corp_offer_field():
+def corp_price_field():
     # 企业offer，上限是企业endowment
     return models.IntegerField(min=0, max=Constants.corp_endowment)
 
@@ -169,8 +197,8 @@ class Player(BasePlayer):
     # 数据变量
     # ========================================================
 
-    res_price = res_offer_field()
-    corp_price = corp_offer_field()
+    res_price = res_price_field()
+    corp_price = corp_price_field()
 
     # 是否达成协议
     deal = models.BooleanField()

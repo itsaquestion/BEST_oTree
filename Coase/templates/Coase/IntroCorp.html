@@ -1,8 +1,8 @@
-{% extends "Coase/PageBase.html" %}
+{% extends "Coase/_PageBase.html" %}
 {% load otree static %}
 
 {% block title %}
-    导言
+    实验说明
 {% endblock %}
 
 {% block content %}
@@ -60,16 +60,19 @@
 
 
     <!--插入谈判结果-->
+    <p>
+        <list>
+            {% if group.init_property == 'corp' %}
+                <li> 若谈判成功，则你放弃开办新工厂，同时你获得自己索取的补偿金额；</li>
+                <li> 若谈判失败，则你开办新工厂，获得开办新工厂的净利润X元。</li>
 
-    {% if group.init_property == 'corp' %}
-        <p>若谈判成功，则你放弃开办新工厂，同时你获得自己索取的补偿金额；</p>
-        <p>若谈判失败，则你开办新工厂，获得开办新工厂的净利润X元。</p>
+            {% else %}
+                <li> 若谈判成功，则你可以开办新工厂，获得开办新工厂的净利润X元，同时支付你的补偿金额；</li>
+                <li> 若谈判失败，则你不能开办新工厂。</li>
 
-    {% else %}
-        <p>若谈判成功，则你可以开办新工厂，获得开办新工厂的净利润X元，同时支付你的补偿金额；</p>
-        <p>若谈判失败，则你不能开办新工厂。</p>
-
-    {% endif %}
+            {% endif %}
+    </list>
+    </p>
 
 
     <p>这5轮谈判将序贯进行，每次都会公布你们的要价/出价和谈判是否成功的信息。</p>

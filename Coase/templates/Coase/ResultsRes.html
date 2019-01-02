@@ -1,0 +1,27 @@
+{% extends "Coase/_PageBase.html" %}
+{% load otree static %}
+
+{% block title %}
+    谈判结果
+{% endblock %}
+
+{% block content %}
+    <p>第<!--插入轮次--> 轮谈判达成/未达成。</p>
+
+    {% if group.init_property == 'corp' %}
+
+        <p>你愿意给予的补偿为____元，企业期望获得的补偿是_____元。</p>
+        <p>你在本轮的最终收益为____元。</p>
+
+    {% else %}
+
+        <p>你期望获得的补偿为____元，企业愿意给予的补偿是_____元。</p>
+        <p>你在本轮的最终收益为____元。</p>
+
+    {% endif %}
+
+    {% next_button %}
+    {% include 'Coase/DebugBlock.html' %}
+{% endblock %}
+
+

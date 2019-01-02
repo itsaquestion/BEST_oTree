@@ -18,15 +18,15 @@ class Results(Page):
 
 class IntroCorp(Page):
     def is_displayed(self):
-        return self.player.the_role == "corp"
+        return self.player.the_role == "corp" and self.round_number in [1, 11, 21]
 
 
 class IntroRes(Page):
     def is_displayed(self):
-        return self.player.the_role == "res"
+        return self.player.the_role == "res" and self.round_number in [1, 11, 21]
 
 
-class OfferCorp(Page):
+class ChoiceCorp(Page):
     form_model = 'player'
     form_fields = ['corp_price']
 
@@ -34,7 +34,7 @@ class OfferCorp(Page):
         return self.player.the_role == "corp"
 
 
-class OfferRes(Page):
+class ChoiceRes(Page):
     form_model = 'player'
     form_fields = ['res_price']
 
@@ -43,15 +43,16 @@ class OfferRes(Page):
 
 
 class Preface(Page):
-    pass
+    def is_displayed(self):
+        return self.round_number == 1
 
 
 page_sequence = [
     Preface,
     IntroCorp,
     IntroRes,
-    OfferCorp,
-    OfferRes,
+    ChoiceCorp,
+    ChoiceRes,
     ResultsWaitPage,
     Results
 ]
