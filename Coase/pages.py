@@ -12,7 +12,15 @@ class ResultsWaitPage(WaitPage):
         self.group.set_payoff()
 
 
-class Results(Page):
+class ResultsCorp(Page):
+    pass
+
+
+class ResultsRes(Page):
+    pass
+
+
+class ResultsFinal(Page):
     pass
 
 
@@ -47,12 +55,21 @@ class Preface(Page):
         return self.round_number == 1
 
 
+class Requirement(Page):
+    def is_displayed(self):
+        return self.round_number == 1
+
+
 page_sequence = [
+    Requirement,
     Preface,
     IntroCorp,
     IntroRes,
     ChoiceCorp,
     ChoiceRes,
     ResultsWaitPage,
-    Results
+    ResultsCorp,
+    ResultsRes,
+    ResultsFinal
+
 ]

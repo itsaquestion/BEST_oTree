@@ -20,9 +20,6 @@ class Constants(BaseConstants):
 
     num_rounds: int = 30
 
-    corp_endowment = 10
-    corp_pollution = 15
-
     res_endowment = 10
 
 
@@ -35,6 +32,9 @@ class Subsession(BaseSubsession):
         self.session.vars['is_debug'] = self.session.config['debug_mode']
         self.session.vars['points_for_one_yuan'] = self.session.config['points_for_one_yuan']
         self.session.vars['participation_fee'] = self.session.config['participation_fee']
+        self.session.vars['corp_profit'] = self.session.config['corp_profit']
+        self.session.vars['res_loss'] = self.session.config['res_loss']
+        self.session.vars['res_loss_one_third'] = round(self.session.vars['res_loss'], 2)
 
         # =================================================================
         # 分组和treatment设置
@@ -96,8 +96,22 @@ class Group(BaseGroup):
             # p1 vs p2, p3 vs p4
             res_price = sum(p.offer for p in self.get_players_by_role("res"))
 
+    def set_profit(self):
+        if self.res_number == 1:
+            set_profit_for_1v1(self)
+        else:
+            set_profit_for_1v3(self)
 
-def set_treatment(g: Group, treatment: str):
+
+def set_profit_for_1v1(g: Group):
+    pass
+
+
+def set_profit_for_1v3(g: Group):
+    pass
+
+
+def set_treatment_for_group(g: Group, treatment: str):
     """
     把treatment:str写入Group以及其下的Players的treatement属性里
     :param g: a Group
@@ -137,26 +151,26 @@ def set_treatment_for_all(gs: List[Group], round_number: int):
     t2 = 'res'
 
     g: Group
-    for gid, g in enumerate(gs):
-        treatment_list = oh.shift(treatment_list_base, gid)
-        treatment_list_swap = oh.shift(treatment_list_base_swap, gid)
+    for idg, g in enumerate(gs):
+        treatment_list = oh.shift(treatment_list_base, idg)
+        treatment_list_swap = oh.shift(treatment_list_base_swap, idg)
         if round_number in range(1, 6):
-            set_treatment(g, treatment_list[0])
+            set_treatment_for_group(g, treatment_list[0])
 
         elif round_number in range(6, 11):
-            set_treatment(g, treatment_list_swap[0])
+            set_treatment_for_group(g, treatment_list_swap[0])
 
         elif round_number in range(11, 16):
-            set_treatment(g, treatment_list[1])
+            set_treatment_for_group(g, treatment_list[1])
 
         elif round_number in range(16, 21):
-            set_treatment(g, treatment_list_swap[1])
+            set_treatment_for_group(g, treatment_list_swap[1])
 
         elif round_number in range(21, 26):
-            set_treatment(g, treatment_list[2])
+            set_treatment_for_group(g, treatment_list[2])
 
         else:
-            set_treatment(g, treatment_list_swap[2])
+            set_treatment_for_group(g, treatment_list_swap[2])
 
 
 def res_price_field():
@@ -205,3 +219,33 @@ class Player(BasePlayer):
 
     # 保存角色
     the_role = models.StringField()
+
+
+def set_profit_core(corp: Player, res_list: List[Player], init_property: str):
+    """
+    盈利计算的内核函数，1个企业 vs 1个居民List
+    :param corp:
+    :param res_list:
+    :param init_property:
+    :return: None
+    """
+    corp_price = corp.corp_price
+    res_price = sum([res.res_price for res in res_list])
+
+    def set_deal(deal: bool):
+        corp.deal = deal
+        for res in res_list:
+            res.deal = deal
+
+    if init_property == "corp":
+        if res_price >= corp_price:
+            set_deal(True)
+        else:
+            set_deal(False)
+    else:
+        if corp_price >= res_price:
+            set_deal(True)
+        else:
+            set_deal(False)
+
+    # TODO: 计算盈利还需要居民的禀赋

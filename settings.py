@@ -360,6 +360,8 @@ SESSION_CONFIGS = [
         'game_time_sec': 15,
         'debug_mode': True,
         'participation_fee': 15,
+        'corp_profit': 10,
+        'res_loss': 15
     },
     {
         'name': 'coase_debug_8',
@@ -372,6 +374,8 @@ SESSION_CONFIGS = [
         'game_time_sec': 15,
         'debug_mode': True,
         'participation_fee': 15,
+        'corp_profit': 10,
+        'res_loss': 15
     }
     # {
     #     'name': 'survey',

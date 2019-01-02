@@ -23,13 +23,14 @@
             <b>相关部门规定必须经遭受损害的居民同意后企业才能开办新工厂。</b>
         {% endif %}
 
-        开办新工厂将为企业带来X元的净利润，同时也会对你的土地造成一定损害。
+        开办新工厂将为企业带来{{ session.vars.corp_profit }}元的净利润，同时也会对你的土地造成一定损害。
 
         <!--插入居民损害计算-->
         {% if group.res_number == 1 %}
-            新增的损害会让你的福利受损，你将遭受的损失为Y元。
+            新增的损害会让你的福利受损，你将遭受的损失为{{ session.vars.res_loss }}元。
         {% else %}
-            新增的损害会让你们三个居民的福利受害，你们三个将遭受的总损失为Y元，你们每个人将遭受的损失均为Y/3元。
+            新增的损害会让你们三个居民的福利受害，你们三个将遭受的总损失为{{ session.vars.res_loss }}元，
+            你们每个人将遭受的损失均为{{ session.vars.res_loss_one_third }}元。
         {% endif %}
 
     </p>
@@ -71,21 +72,22 @@
         <list>
             {% if player.treatment == 'corp_1' %}
                 <li>若谈判成功，则企业放弃开办新工厂，你需要支付给企业你的出价；</li>
-                <li>若谈判失败，则企业开办新工厂，你将遭受Y元的损失。</li>
+                <li>若谈判失败，则企业开办新工厂，你将遭受{{ session.vars.res_loss }}元的损失。</li>
 
 
             {% elif player.treatment == 'corp_3' %}
                 <li>若谈判成功，则企业放弃开办新工厂，你需要支付给企业你的出价；</li>
-                <li>若谈判失败，则企业开办新工厂，你们3个居民将遭受共Y元的损失，每个居民将遭受Y/3元的损失。</li>
+                <li>若谈判失败，则企业开办新工厂，你们3个居民将遭受共{{ session.vars.res_loss }}元的损失，
+                    每个居民将遭受{{ session.vars.res_loss_one_third }}元的损失。</li>
 
             {% elif player.treatment == 'res_1' %}
-                <li>若谈判成功，则企业可以开办新工厂，你将遭受Y元的损失，同时获得企业补偿的金额；</li>
+                <li>若谈判成功，则企业可以开办新工厂，你将遭受{{ session.vars.res_loss }}元的损失，同时获得企业补偿的金额；</li>
                 <li>若谈判失败，则企业不能开办新工厂。</li>
 
             {% else %}
                 <!-- treatment == res_3 -->
                 <li>
-                    若谈判成功，则企业可以开办新工厂，你将遭受Y/3元的损失，
+                    若谈判成功，则企业可以开办新工厂，你将遭受{{ session.vars.res_loss_one_third }}元的损失，
                     同时你将获得企业支付的补偿额的一部分（根据你们三个居民的要价按比例分配，比如若你提出的补偿金额为li1，
                     第二个居民要求的补偿金额为li2，第三个居民要求的补偿金额为li3，则你获得企业补偿的比例为li1/（li1+li2+li3））；
                 </li>
@@ -101,7 +103,7 @@
 
 
     {% next_button %}
-    {% include 'Coase/DebugBlock.html' %}
+    {% include 'Coase/_DebugBlock.html' %}
 {% endblock %}
 
 

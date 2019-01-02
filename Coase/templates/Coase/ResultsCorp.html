@@ -6,11 +6,11 @@
 {% endblock %}
 
 {% block content %}
-    <p>第<!--插入轮次--> 轮谈判达成/未达成。</p>
+    <p>第<!--插入轮次-->{{ group.subgame_counter }}轮谈判达成/未达成。</p>
 
     {% if group.init_property == 'corp' %}
 
-        <p>你期望获得的补偿为____元，居民愿意给予的补偿是_____元。</p>
+        <p>你期望获得的补偿为{{ player.corp_price }}元，居民愿意给予的补偿是_____元。</p>
         <p>你在本轮的最终收益为____元。</p>
 
     {% else %}
@@ -21,7 +21,7 @@
     {% endif %}
 
     {% next_button %}
-    {% include 'Coase/DebugBlock.html' %}
+    {% include 'Coase/_DebugBlock.html' %}
 {% endblock %}
 
 
