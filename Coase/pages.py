@@ -38,6 +38,9 @@ class ChoiceCorp(Page):
     form_model = 'player'
     form_fields = ['corp_price']
 
+    def offer_max(self):
+        return self.player.session.vars['corp_profit']
+
     def is_displayed(self):
         return self.player.the_role == "corp"
 
@@ -45,6 +48,9 @@ class ChoiceCorp(Page):
 class ChoiceRes(Page):
     form_model = 'player'
     form_fields = ['res_price']
+
+    def offer_max(self):
+        return Constants.res_endowment
 
     def is_displayed(self):
         return self.player.the_role == "res"

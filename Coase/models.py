@@ -84,6 +84,28 @@ class Group(BaseGroup):
     init_property = models.StringField()
     res_number = models.IntegerField()
 
+    def set_treatment(self, treatment):
+        """
+           把treatment:str写入Group以及其下的Players的treatement属性里
+           :param g: a Group
+           :param treatment: the treatment string
+           :return: none
+           """
+        self.treatment = treatment
+
+        if "corp" in treatment:
+            self.init_property = "corp"
+        else:
+            self.init_property = "res"
+
+        if "1" in treatment:
+            self.res_number = 1
+        else:
+            self.res_number = 3
+
+        for p in self.get_players():
+            p.treatment = treatment
+
     # 无产权的一方出价，高于对方出价，则deal = True，以无产权方出价为准
     def set_payoff(self):
         if self.treatment == "corp_1":
@@ -111,29 +133,6 @@ def set_profit_for_1v3(g: Group):
     pass
 
 
-def set_treatment_for_group(g: Group, treatment: str):
-    """
-    把treatment:str写入Group以及其下的Players的treatement属性里
-    :param g: a Group
-    :param treatment: the treatment string
-    :return: none
-    """
-    g.treatment = treatment
-
-    if "corp" in treatment:
-        g.init_property = "corp"
-    else:
-        g.init_property = "res"
-
-    if "1" in treatment:
-        g.res_number = 1
-    else:
-        g.res_number = 3
-
-    for p in g.get_players():
-        p.treatment = treatment
-
-
 def set_treatment_for_all(gs: List[Group], round_number: int):
     """
     初始的treatment顺序列表，表示每个10轮的起始（G1）的treatment
@@ -155,32 +154,22 @@ def set_treatment_for_all(gs: List[Group], round_number: int):
         treatment_list = oh.shift(treatment_list_base, idg)
         treatment_list_swap = oh.shift(treatment_list_base_swap, idg)
         if round_number in range(1, 6):
-            set_treatment_for_group(g, treatment_list[0])
+            g.set_treatment(treatment_list[0])
 
         elif round_number in range(6, 11):
-            set_treatment_for_group(g, treatment_list_swap[0])
+            g.set_treatment(treatment_list_swap[0])
 
         elif round_number in range(11, 16):
-            set_treatment_for_group(g, treatment_list[1])
+            g.set_treatment(treatment_list[1])
 
         elif round_number in range(16, 21):
-            set_treatment_for_group(g, treatment_list_swap[1])
+            g.set_treatment(treatment_list_swap[1])
 
         elif round_number in range(21, 26):
-            set_treatment_for_group(g, treatment_list[2])
+            g.set_treatment(treatment_list[2])
 
         else:
-            set_treatment_for_group(g, treatment_list_swap[2])
-
-
-def res_price_field():
-    # 居民offer，上限是居民endowment
-    return models.IntegerField(min=0, max=Constants.res_endowment)
-
-
-def corp_price_field():
-    # 企业offer，上限是企业endowment
-    return models.IntegerField(min=0, max=Constants.corp_endowment)
+            g.set_treatment(treatment_list_swap[2])
 
 
 class Player(BasePlayer):
@@ -211,8 +200,8 @@ class Player(BasePlayer):
     # 数据变量
     # ========================================================
 
-    res_price = res_price_field()
-    corp_price = corp_price_field()
+    res_price = models.IntegerField(min=0)
+    corp_price = models.IntegerField(min=0)
 
     # 是否达成协议
     deal = models.BooleanField()
