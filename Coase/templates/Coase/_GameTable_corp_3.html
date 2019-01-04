@@ -1,0 +1,23 @@
+{% block content %}
+    <p>
+    <table class="grid_table">
+        <tr>
+            <th></th>
+            <th>企业净收益</th>
+            <th>居民净收益</th>
+        </tr>
+        <tr>
+            <td>开办工厂</td>
+            <td>{{ session.vars.low_value }}</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>停办工厂</td>
+            <td>X</td>
+            <td>{{ session.vars.high_value_one_third }} - Y</td>
+        </tr>
+    </table></p>
+
+{% endblock %}
+
+
