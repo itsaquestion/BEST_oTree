@@ -32,9 +32,14 @@ class Subsession(BaseSubsession):
         self.session.vars['is_debug'] = self.session.config['debug_mode']
         self.session.vars['points_for_one_yuan'] = self.session.config['points_for_one_yuan']
         self.session.vars['participation_fee'] = self.session.config['participation_fee']
-        self.session.vars['corp_profit'] = self.session.config['corp_profit']
-        self.session.vars['res_loss'] = self.session.config['res_loss']
-        self.session.vars['res_loss_one_third'] = round(self.session.vars['res_loss'], 2)
+
+        # =================================================================
+        # 关键变量
+        # =================================================================
+        self.session.vars['high_value'] = self.session.config['high_value']
+        self.session.vars['low_value'] = self.session.config['low_value']
+        self.session.vars['high_value_one_third'] = round(self.session.vars['high_value'] / 3, 2)
+        self.session.vars['low_value_one_third'] = round(self.session.vars['low_value'] / 3, 2)
 
         # =================================================================
         # 分组和treatment设置
@@ -84,9 +89,13 @@ class Group(BaseGroup):
     init_property = models.StringField()
     res_number = models.IntegerField()
 
+    corp_profit = models.IntegerField()
+    core_pollution = models.IntegerField()
+    res_total_health = models.IntegerField()
+
     def set_treatment(self, treatment):
         """
-           把treatment:str写入Group以及其下的Players的treatement属性里
+           把treatment:str写入Group以及其下的Players的treatment属性里
            :param g: a Group
            :param treatment: the treatment string
            :return: none
@@ -94,8 +103,11 @@ class Group(BaseGroup):
         self.treatment = treatment
 
         if "corp" in treatment:
+            # 产权归企业
             self.init_property = "corp"
+
         else:
+            # 产权归居民
             self.init_property = "res"
 
         if "1" in treatment:
@@ -103,26 +115,33 @@ class Group(BaseGroup):
         else:
             self.res_number = 3
 
+        p: Player
         for p in self.get_players():
             p.treatment = treatment
+            if p.role() == self.init_property:
+                p.is_seller = True
+            else:
+                p.is_seller = False
 
     # 无产权的一方出价，高于对方出价，则deal = True，以无产权方出价为准
     def set_payoff(self):
-        if self.treatment == "corp_1":
-            # 1v1，产权归企业
-            # p1 vs p2, p3 vs p4
-            self.get_player_by_id(1)
-
-        if self.treatment == "corp_3":
-            # 1v1，产权归企业
-            # p1 vs p2, p3 vs p4
-            res_price = sum(p.offer for p in self.get_players_by_role("res"))
+        # if self.treatment == "corp_1":
+        #     # 1v1，产权归企业
+        #     # p1 vs p2, p3 vs p4
+        #     self.get_player_by_id(1)
+        #
+        # if self.treatment == "corp_3":
+        #     # 1v1，产权归企业
+        #     # p1 vs p2, p3 vs p4
+        #     res_price = sum(p.offer for p in self.get_players_by_role("res"))
+        pass
 
     def set_profit(self):
-        if self.res_number == 1:
-            set_profit_for_1v1(self)
-        else:
-            set_profit_for_1v3(self)
+        # if self.res_number == 1:
+        #     set_profit_for_1v1(self)
+        # else:
+        #     set_profit_for_1v3(self)
+        pass
 
 
 def set_profit_for_1v1(g: Group):
@@ -143,7 +162,7 @@ def set_treatment_for_all(gs: List[Group], round_number: int):
     :return:
     """
 
-    treatment_list_base: List[str] = ['corp_1', 'corp_3', 'corp_3']
+    treatment_list_base: List[str] = ['corp_1', 'corp_3', 'crop_3']
     treatment_list_base_swap: List[str] = ['res_1', 'res_3', 'res_3']
 
     t1 = 'corp'
@@ -200,8 +219,11 @@ class Player(BasePlayer):
     # 数据变量
     # ========================================================
 
-    res_price = models.IntegerField(min=0)
-    corp_price = models.IntegerField(min=0)
+    # 一个人不可能同时担任2种角色，因此一个price表示他们的选择即可
+    price = models.IntegerField(min=0)
+
+    # 权力的持有者，即卖方
+    is_seller = models.BooleanField()
 
     # 是否达成协议
     deal = models.BooleanField()
@@ -210,31 +232,41 @@ class Player(BasePlayer):
     the_role = models.StringField()
 
 
-def set_profit_core(corp: Player, res_list: List[Player], init_property: str):
+def set_profit_core(seller_list: List[Player], buyer_list: List[Player]):
     """
-    盈利计算的内核函数，1个企业 vs 1个居民List
-    :param corp:
-    :param res_list:
-    :param init_property:
-    :return: None
+    计算双方的赢利。
+    若buyer的price之和 >= 若seller的price之和，则deal，否则no deal
+    :param seller_list:
+    :param buyer_list:
+    :return:
     """
-    corp_price = corp.corp_price
-    res_price = sum([res.res_price for res in res_list])
 
     def set_deal(deal: bool):
-        corp.deal = deal
-        for res in res_list:
-            res.deal = deal
+        for p in seller_list:
+            p.deal = deal
+        for p in buyer_list:
+            p.deal = deal
 
-    if init_property == "corp":
-        if res_price >= corp_price:
-            set_deal(True)
-        else:
-            set_deal(False)
-    else:
-        if corp_price >= res_price:
-            set_deal(True)
-        else:
-            set_deal(False)
+    def set_payoff_on_price():
+        for p in seller_list:
+            p.payoff = p.price
+        for p in buyer_list:
+            p.payoff = p.price
 
-    # TODO: 计算盈利还需要居民的禀赋
+    seller_price = sum([p.price for p in seller_list])
+    buyer_price = sum([p.price for p in buyer_list])
+
+    the_deal = (buyer_price >= seller_price)
+
+    set_deal(the_deal)
+
+    if the_deal:
+        set_payoff_on_price()
+
+    # 如果deal，那么
+    #   seller.payoff = seller.price
+    #   buyer.payoff = high_value - buyer.price
+
+    # no deal，那么
+    #   seller.payoff = low_value
+    #   buyer.payoff = 0

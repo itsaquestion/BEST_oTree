@@ -7,17 +7,117 @@
 
 {% block content %}
 
-    {% if group.init_property == 'corp' %}
-        <p>你最多愿意补偿给企业
-            <input type="number" name="res_price" min="0" max="10" required id="id_res_price"/>
-            元（请填整数），让企业放弃开办新工厂？</p>
+    {% if player.treatment == 'corp_1' %}
+      <p><b>企业已经从相关部门获得在该土地上开办工厂的许可。</b></p>
+
+        <p><!-- 下面是你的盈利表：-->
+        <table class="grid_table">
+            <tr>
+                <th>利润</th>
+                <th>企业</th>
+                <th>居民</th>
+            </tr>
+            <tr>
+                <td>开办工厂</td>
+                <td>{{ session.vars.low_value }} </td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>停办工厂</td>
+                <td>X</td>
+                <td>{{ session.vars.high_value}} - Y</td>
+            </tr>
+        </table>
+        </p>
+
+        <p>为了让企业停办工厂，你愿意提供
+            <input type="number" name="price" min="0" required id="id_price"/>代币补偿（请填整数）。
+        </p>
+
+    {% elif player.treatment == 'corp_3' %}
+        <p><b>企业已经从相关部门获得在该土地上开办工厂的许可。</b></p>
+
+        <p><!-- 下面是你的盈利表：-->
+        <table class="grid_table">
+            <tr>
+                <th>利润</th>
+                <th>企业</th>
+                <th>居民</th>
+            </tr>
+            <tr>
+                <td>开办工厂</td>
+                <td>{{ session.vars.low_value }}</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>停办工厂</td>
+                <td>X</td>
+                <td>{{ session.vars.high_value_one_third }} - Y1</td>
+            </tr>
+        </table>
+        </p>
+
+        <p>为了让企业停办工厂，你愿意提供
+            <input type="number" name="price" min="0" required id="id_price"/>代币补偿（请填整数）。
+        </p>
+
+    {% elif player.treatment == 'res_1' %}
+        <p><b>相关部门规定必须经居民同意后企业才能在该土地上开办工厂。</b></p>
+
+        <p><!-- 下面是你的盈利表：-->
+        <table class="grid_table">
+            <tr>
+                <th>利润</th>
+                <th>企业</th>
+                <th>居民</th>
+            </tr>
+            <tr>
+                <td>开办工厂</td>
+                <td>{{ session.vars.high_value }} - X</td>
+                <td>Y</td>
+            </tr>
+            <tr>
+                <td>停办工厂</td>
+                <td>0</td>
+                <td>{{ session.vars.low_value }}</td>
+            </tr>
+        </table>
+        </p>
+
+        <p>你将索取补偿金额等于
+            <input type="number" name="price" min="0" required id="id_price"/>代币（请填整数），你才会同意开办工厂。
+        </p>
 
     {% else %}
-        <p>企业最少需要补偿给你
-            <input type="number" name="res_price" min="0" max="10" required id="id_res_price"/>
-            元（请填整数），你才同意企业开办新工厂？</p>
+        <p><b>相关部门规定必须经居民同意后企业才能在该土地上开办工厂。</b></p>
+
+        <p><!-- 下面是你的盈利表：-->
+        <table class="grid_table">
+            <tr>
+                <th>利润</th>
+                <th>企业</th>
+                <th>居民</th>
+            </tr>
+            <tr>
+                <td>开办工厂</td>
+                <td>{{ session.vars.high_value }} - X</td>
+                <td>Y1</td>
+            </tr>
+            <tr>
+                <td>停办工厂</td>
+                <td>0   </td>
+                <td>{{ session.vars.low_value_one_third}}</td>
+            </tr>
+        </table>
+        </p>
+
+        <p>你将索取补偿金额等于
+            <input type="number" name="price" min="0" required id="id_price"/>代币（请填整数），你才会同意开办工厂。
+        </p>
+
     {% endif %}
+
+
     {% next_button %}
-    {{ form.res_price.errors }}
     {% include 'Coase/_DebugBlock.html' %}
 {% endblock %}

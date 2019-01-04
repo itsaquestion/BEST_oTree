@@ -1,17 +1,52 @@
 {% block content %}
 
     {% if session.vars.is_debug == True %}
-    <hr>
+        <hr>
         <h4 style="color:Red;"> Debug 信息</h4>
-        GID: {{ player.gid }}
-        <br>
-        Treatment: {{ player.treatment }}
-        <br>
-        Role: {{ player.role }}
-        <br>
-        Num of residents: {{ group.res_number }}
-        <br>
-        Initial property: {{ group.init_property }}
+        <div class="debug_table">
+            <table>
+                <tr>
+                    <th>Variable</th>
+                    <th>Value</th>
+
+                </tr>
+                <tr>
+                    <td>GID</td>
+                    <td>{{ player.gid }}</td>
+
+                </tr>
+                <tr>
+                    <td>Treatment</td>
+                    <td>{{ player.treatment }}</td>
+
+                </tr>
+                <tr>
+                    <td>Role</td>
+                    <td>{{ player.role }}</td>
+
+                </tr>
+                <tr>
+                    <td>Num of residents</td>
+                    <td> {{ group.res_number }}</td>
+
+                </tr>
+                <tr>
+                    <td>Initial property</td>
+                    <td> {{ group.init_property }}</td>
+
+                </tr>
+                <tr>
+                    <td> High Value</td>
+                    <td> {{ session.vars.high_value }}</td>
+
+                </tr>
+                <tr>
+                    <td>Low Value</td>
+                    <td> {{ session.vars.low_value }}</td>
+
+                </tr>
+            </table>
+        </div>
     {% endif %}
 {% endblock %}
 
