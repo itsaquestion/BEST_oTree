@@ -3,14 +3,17 @@ from ._builtin import Page, WaitPage
 from .models import Constants
 
 
-class GroupChecker(Page):
-    pass
-
-
 class ResultsWaitPage(WaitPage):
     def after_all_players_arrive(self):
-        #self.group.set_payoff()
+        self.group.set_payoff()
         pass
+
+
+class ResultsFinalWaitPage(WaitPage):
+    def after_all_players_arrive(self):
+        self.group.set_payoff()
+        pass
+
 
 class ResultsCorp(Page):
     def is_displayed(self):
@@ -69,6 +72,11 @@ class Requirement(Page):
         return self.round_number == 1
 
 
+class Blank(Page):
+    def is_displayed(self):
+        return self.round_number == 30
+
+
 page_sequence = [
     Requirement,
     Preface,
@@ -79,6 +87,8 @@ page_sequence = [
     ResultsWaitPage,
     ResultsCorp,
     ResultsRes,
+    Blank,
+    ResultsFinalWaitPage,
     ResultsFinal
 
 ]

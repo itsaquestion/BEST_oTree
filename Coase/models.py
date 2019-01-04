@@ -20,7 +20,7 @@ class Constants(BaseConstants):
 
     num_rounds: int = 30
 
-    res_endowment = 10
+    pay_rounds: List[int] = [2, 4, 9, 15, 19, 27]
 
 
 class Subsession(BaseSubsession):
@@ -125,31 +125,37 @@ class Group(BaseGroup):
 
     # 无产权的一方出价，高于对方出价，则deal = True，以无产权方出价为准
     def set_payoff(self):
-        # if self.treatment == "corp_1":
-        #     # 1v1，产权归企业
-        #     # p1 vs p2, p3 vs p4
-        #     self.get_player_by_id(1)
-        #
-        # if self.treatment == "corp_3":
-        #     # 1v1，产权归企业
-        #     # p1 vs p2, p3 vs p4
-        #     res_price = sum(p.offer for p in self.get_players_by_role("res"))
-        pass
+        hv = self.session.vars['high_value']
+        lv = self.session.vars['low_value']
 
-    def set_profit(self):
-        # if self.res_number == 1:
-        #     set_profit_for_1v1(self)
-        # else:
-        #     set_profit_for_1v3(self)
-        pass
+        p1 = self.get_player_by_id(1)
+        p2 = self.get_player_by_id(2)
+        p3 = self.get_player_by_id(3)
+        p4 = self.get_player_by_id(4)
+        p5 = self.get_player_by_id(5)
+        p6 = self.get_player_by_id(6)
+        p7 = self.get_player_by_id(7)
+        p8 = self.get_player_by_id(8)
 
+        if self.treatment == "corp_1":
+            set_profit_core([p1], [p2], hv, lv)
+            set_profit_core([p3], [p4], hv, lv)
+            set_profit_core([p5], [p6], hv, lv)
+            set_profit_core([p7], [p8], hv, lv)
 
-def set_profit_for_1v1(g: Group):
-    pass
+        if self.treatment == "corp_3":
+            set_profit_core([p1], [p2, p3, p4], hv, lv)
+            set_profit_core([p5], [p6, p7, p8], hv, lv)
 
+        if self.treatment == "res_1":
+            set_profit_core([p2], [p1], hv, lv)
+            set_profit_core([p4], [p3], hv, lv)
+            set_profit_core([p6], [p5], hv, lv)
+            set_profit_core([p8], [p7], hv, lv)
 
-def set_profit_for_1v3(g: Group):
-    pass
+        if self.treatment == "res_3":
+            set_profit_core([p2, p3, p4], [p1], hv, lv)
+            set_profit_core([p6, p7, p8], [p5], hv, lv)
 
 
 def set_treatment_for_all(gs: List[Group], round_number: int):
@@ -162,7 +168,7 @@ def set_treatment_for_all(gs: List[Group], round_number: int):
     :return:
     """
 
-    treatment_list_base: List[str] = ['corp_1', 'corp_3', 'crop_3']
+    treatment_list_base: List[str] = ['corp_1', 'corp_3', 'corp_3']
     treatment_list_base_swap: List[str] = ['res_1', 'res_3', 'res_3']
 
     t1 = 'corp'
@@ -219,8 +225,24 @@ class Player(BasePlayer):
     # 数据变量
     # ========================================================
 
+    profit = models.FloatField()
+
     # 一个人不可能同时担任2种角色，因此一个price表示他们的选择即可
+
+    # 参与人输入的数字
     price = models.IntegerField(min=0)
+
+    # 己方输入的数字之和
+    price_total = models.IntegerField(min=0)
+
+    # 己方输入数字列表，用逗号隔开
+    price_list = models.StringField()
+
+    # 对方输入的数字之和
+    counterpart_price_total = models.IntegerField(min=0)
+
+    # 对方输入数字的列表，用逗号隔开
+    counterpart_price_list = models.StringField()
 
     # 权力的持有者，即卖方
     is_seller = models.BooleanField()
@@ -232,41 +254,60 @@ class Player(BasePlayer):
     the_role = models.StringField()
 
 
-def set_profit_core(seller_list: List[Player], buyer_list: List[Player]):
+def set_profit_core(seller_list: List[Player], buyer_list: List[Player], high_value: int, low_value: int):
     """
     计算双方的赢利。
-    若buyer的price之和 >= 若seller的price之和，则deal，否则no deal
+
     :param seller_list:
     :param buyer_list:
     :return:
     """
 
-    def set_deal(deal: bool):
+    seller_price_list = [p.price for p in seller_list]
+    buyer_price_list = [p.price for p in buyer_list]
+
+    seller_price_list_str = '、'.join(str(x) for x in [p.price for p in seller_list])
+    buyer_price_list_str = '、'.join(str(x) for x in [p.price for p in buyer_list])
+
+    seller_price_total = sum(seller_price_list)
+    buyer_price_total = sum(buyer_price_list)
+
+    seller_size = len(seller_list)
+    buyer_size = len(buyer_list)
+
+    buyer: Player
+    seller: Player
+    the_deal: bool
+
+    # 记录已知信息
+    for p in seller_list:
+        p.price_total = seller_price_total
+        p.price_list = seller_price_list_str
+        p.counterpart_price_total = buyer_price_total
+        p.counterpart_price_list = buyer_price_list_str
+
+    for p in buyer_list:
+        p.price_total = buyer_price_total
+        p.price_list = buyer_price_list_str
+        p.counterpart_price_total = seller_price_total
+        p.counterpart_price_list = seller_price_list_str
+
+    # 计算盈利
+    if buyer_price_total >= seller_price_total:
+        # Deal
         for p in seller_list:
-            p.deal = deal
-        for p in buyer_list:
-            p.deal = deal
+            p.deal = True
+            p.profit = p.price
 
-    def set_payoff_on_price():
+        for p in buyer_list:
+            p.deal = True
+            p.profit = round(high_value / buyer_size, 2) - p.price
+    else:
+        # No Deal
         for p in seller_list:
-            p.payoff = p.price
+            p.deal = False
+            p.profit = round(low_value / seller_size, 2)
+
         for p in buyer_list:
-            p.payoff = p.price
-
-    seller_price = sum([p.price for p in seller_list])
-    buyer_price = sum([p.price for p in buyer_list])
-
-    the_deal = (buyer_price >= seller_price)
-
-    set_deal(the_deal)
-
-    if the_deal:
-        set_payoff_on_price()
-
-    # 如果deal，那么
-    #   seller.payoff = seller.price
-    #   buyer.payoff = high_value - buyer.price
-
-    # no deal，那么
-    #   seller.payoff = low_value
-    #   buyer.payoff = 0
+            p.deal = False
+            p.profit = 0

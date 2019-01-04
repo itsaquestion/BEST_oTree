@@ -55,3 +55,9 @@ print("\nNew:")
 for p in g:
     print(p.role(), end=" ")
     print(p._i)
+
+
+# string
+
+print(', '.join(str(x) for x in [1,2,3]))
+print(', '.join(str(x) for x in [1]))

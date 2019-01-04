@@ -1,22 +1,39 @@
-{% extends "Coase/_PageBase.html" %}
+{% extends "Coase/__PageBase.html" %}
 {% load otree static %}
 
 {% block title %}
-    谈判结果
+    第{{ group.subgame_counter }}谈判结果
 {% endblock %}
 
 {% block content %}
-    <p>第<!--插入轮次-->{{ group.subgame_counter }}轮谈判达成/未达成。</p>
+    <p>第<!--插入轮次-->{{ group.subgame_counter }}轮谈判
+        {% if player.deal %}
+            成功
+        {% else %}
+            失败
+        {% endif %}
+        。</p>
 
-    {% if group.init_property == 'corp' %}
+    {% if player.treatment == 'corp_1' %}
+        <p>你索取的补偿为<!-- 变量：企业决策 -->{{ player.price }}代币，
+            居民提供的补偿金额是<!-- 变量：居民决策 -->{{ player.counterpart_price_total }}代币。</p>
+        <p>你在本轮的最终收益为<!-- 变量：企业收益 -->{{ player.profit }}代币。</p>
 
-        <p>你期望获得的补偿为____元，居民愿意给予的补偿是_____元。</p>
-        <p>你在本轮的最终收益为____元。</p>
+    {% elif player.treatment == 'corp_3' %}
+        <p>你索取的补偿为<!-- 变量：企业决策 -->{{ player.price }}代币，
+            居民提供的补偿总金额是<!-- 变量：居民决策 -->{{ player.counterpart_price_total }}代币。</p>
+        <p>你在本轮的最终收益为<!-- 变量：企业收益 -->{{ player.profit }}代币。</p>
+
+    {% elif player.treatment == 'res_1' %}
+        <p>你提供的补偿金额为<!-- 变量：企业决策 -->{{ player.price }}代币，
+            居民索取的补偿金额是<!-- 变量：居民决策 -->{{ player.counterpart_price_total }}代币。</p>
+        <p>你在本轮的最终收益为<!-- 变量：企业收益 -->{{ player.profit }}代币。</p>
 
     {% else %}
+        <p>你提供的补偿金额为<!-- 变量：企业决策 -->{{ player.price }}代币，
+            居民索取的补偿总金额是<!-- 变量：居民决策 -->{{ player.counterpart_price_total }}代币。</p>
+        <p>你在本轮的最终收益为<!-- 变量：企业收益 --> {{ player.profit }}代币。</p>
 
-        <p>你愿意给予的补偿为____元，居民期望获得的补偿是_____元。</p>
-        <p>你在本轮的最终收益为____元。</p>
 
     {% endif %}
 

@@ -1,4 +1,4 @@
-{% extends "Coase/_PageBase.html" %}
+{% extends "Coase/__PageBase.html" %}
 {% load otree static %}
 
 {% block title %}
@@ -12,8 +12,8 @@
 
         {% include 'Coase/_GameTable_corp_1.html' %}
 
-        <p>你将索取补偿金额等于
-            <input type="number" name="price" min="0" required id="id_price"/>代币（请填整数），你才会放弃开办工厂。
+        <p>你将索取补偿金额X等于
+            <input type="number" name="price" min="0" max="{{ session.vars.high_value }}" required id="id_price"/>代币（请填整数），你才会放弃开办工厂。
         </p>
 
 
@@ -22,8 +22,8 @@
 
         {% include 'Coase/_GameTable_corp_3.html' %}
 
-        <p>你将索取补偿金额等于
-            <input type="number" name="price" min="0" required id="id_price"/>代币（请填整数），你才会放弃开办工厂。
+        <p>你将索取补偿金额X等于
+            <input type="number" name="price" min="0" max="{{ session.vars.high_value }}" required id="id_price"/>代币（请填整数），你才会放弃开办工厂。
         </p>
 
     {% elif player.treatment == 'res_1' %}
@@ -31,8 +31,8 @@
 
         {% include 'Coase/_GameTable_res_1.html' %}
 
-        <p>为了开办工厂，你愿意提供
-            <input type="number" name="price" min="0" required id="id_price"/>代币补偿。（请填整数）
+        <p>为了开办工厂，你愿意提供X等于
+            <input type="number" name="price" min="0" max="{{ session.vars.high_value }}" required id="id_price"/>代币补偿。（请填整数）
         </p>
 
     {% else %}
@@ -40,8 +40,8 @@
 
         {% include 'Coase/_GameTable_res_3.html' %}
 
-        <p>为了开办工厂，你愿意提供
-            <input type="number" name="price" min="0" required id="id_price"/>代币补偿。（请填整数）
+        <p>为了开办工厂，你愿意提供X等于
+            <input type="number" name="price" min="0" max="{{ session.vars.high_value }}" required id="id_price"/>代币补偿。（请填整数）
         </p>
 
     {% endif %}

@@ -1,0 +1,19 @@
+{% extends "Coase/__PageBase.html" %}
+{% load otree static %}
+
+{% block title %}
+    结果
+{% endblock %}
+
+{% block content %}
+    <p>电脑在6个任务，总共30轮中随机抽取了6轮，并根据这6轮的结果的总和来支付实验报酬。</p>
+    <p>{{  }}</p>
+
+
+
+    {% next_button %}
+
+    {% include 'Coase/_DebugBlock.html' %}
+{% endblock %}
+
+
