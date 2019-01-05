@@ -48,6 +48,7 @@ class Group(BaseGroup):
         self.individual_share = self.total_contribution * Constants.multiplier / Constants.players_per_group
         for p in self.get_players():
             p.payoff = (Constants.endowment - p.contribution) + self.individual_share
+            p.participant.payoff = p.payoff
 
 
 class Player(BasePlayer):
