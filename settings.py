@@ -9,7 +9,7 @@ BROWSER_COMMAND = 'C:/Program Files/Mozilla Firefox/firefox.exe'
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-#SENTRY_DSN = 'http://38b3b3045f244cf8bf5e8c9b60a4aa01:222bf70e524b4259a1723171cf59224f@sentry.otree.org/96'
+# SENTRY_DSN = 'http://38b3b3045f244cf8bf5e8c9b60a4aa01:222bf70e524b4259a1723171cf59224f@sentry.otree.org/96'
 
 # the environment variable OTREE_PRODUCTION controls whether Django runs in
 # DEBUG mode. If OTREE_PRODUCTION==1, then DEBUG=False
@@ -21,7 +21,7 @@ else:
 # don't share this with anybody.
 SECRET_KEY = 't9^m1wyod_ytgsu@#uvq+dwko5!a31=gpeg5dy1hg(^%9tw+9t'
 
-#BROWSER_COMMAND = 'firefox'
+# BROWSER_COMMAND = 'firefox'
 
 DATABASES = {
     'default': dj_database_url.config(
@@ -378,7 +378,21 @@ SESSION_CONFIGS = [
         'participation_fee': 15,
         'high_value': 189,
         'low_value': 99
-    }
+    },
+    {
+        'name': 'public_goods_survey_risk',
+        'display_name': "Public Goods",
+        'num_demo_participants': 3,
+        'points_for_one_yuan': 10,
+        'app_sequence': ['public_goods', 'survey_risk'],
+    },
+    {
+        'name': 'survey_risk',
+        'display_name': "Survey: Risk",
+        'num_demo_participants': 1,
+        'points_for_one_yuan': 10,
+        'app_sequence': ['survey_risk'],
+    },
     # {
     #     'name': 'survey',
     #     'display_name': "Survey",

@@ -1,0 +1,17 @@
+{% extends "Coase/__PageBase.html" %}
+{% load otree static %}
+
+{% block title %}
+    结果
+{% endblock %}
+
+{% block content %}
+
+    <p>被随机抽取的赌局决策结果是第<b>{{ player.pay_round }}</b>项，你的选择是<b>{{ gamble_choice }}</b>赌局。</p>
+    <p>因此，结果是：</p>
+
+    <p>你获得了<b>{{ player.profit }}</b>个代币。</p>
+
+    {% next_button %}
+
+{% endblock %}

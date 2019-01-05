@@ -1,0 +1,21 @@
+{% extends "Coase/__PageBase.html" %}
+{% load otree static %}
+
+{% block title %}
+    Page title
+{% endblock %}
+
+{% block content %}
+    <p>现在，我们赠与你50代币。</p>
+    <p>你可以持有这50代币；也可以用这50代币参与如下赌局，赌局的损失从50代币中扣除，赌局的收益将累加在50代币上。</p>
+    <p>在每个赌局中你赢或者输的概率各50%。如果接受该赌局，则获得赌局的收益或损失；如果拒绝赌局，就保留已赠与你的50个实验币。</p>
+    <p>当你完成如下八个决策后，我们会随机选择其中一个赌局决策结果来付诸实际，将对应的实验币兑换为现金结算给你。</p>
+
+
+    {% for field in form %}
+        {% formfield field %}
+    {% endfor %}
+
+    {% next_button %}
+
+{% endblock %}
