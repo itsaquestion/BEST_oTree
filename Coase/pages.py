@@ -6,13 +6,14 @@ from .models import Constants
 class ResultsWaitPage(WaitPage):
     def after_all_players_arrive(self):
         self.group.set_payoff()
-        pass
 
 
 class ResultsFinalWaitPage(WaitPage):
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
+
     def after_all_players_arrive(self):
-        self.group.set_payoff()
-        pass
+        self.group.set_final_payoff()
 
 
 class ResultsCorp(Page):
@@ -28,6 +29,11 @@ class ResultsRes(Page):
 class ResultsFinal(Page):
     def is_displayed(self):
         return self.round_number == Constants.num_rounds
+
+    def vars_for_template(self):
+        return {
+            'pay_rounds_str': ', '.join([str(x) for x in Constants.pay_rounds])
+        }
 
 
 class IntroCorp(Page):
@@ -55,9 +61,6 @@ class ChoiceRes(Page):
     form_model = 'player'
     form_fields = ['price']
 
-    def offer_max(self):
-        return Constants.res_endowment
-
     def is_displayed(self):
         return self.player.the_role == "res"
 
@@ -78,16 +81,15 @@ class Blank(Page):
 
 
 page_sequence = [
-    Requirement,
-    Preface,
-    IntroCorp,
-    IntroRes,
+    # Requirement,
+    # Preface,
+    # IntroCorp,
+    # IntroRes,
     ChoiceCorp,
     ChoiceRes,
     ResultsWaitPage,
-    ResultsCorp,
-    ResultsRes,
-    Blank,
+    # ResultsCorp,
+    # ResultsRes
     ResultsFinalWaitPage,
     ResultsFinal
 

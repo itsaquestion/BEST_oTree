@@ -20,7 +20,7 @@ class Constants(BaseConstants):
 
     num_rounds: int = 30
 
-    pay_rounds: List[int] = [2, 4, 9, 15, 19, 27]
+    pay_rounds: List[int] = [4, 15, 27]
 
 
 class Subsession(BaseSubsession):
@@ -89,10 +89,6 @@ class Group(BaseGroup):
     init_property = models.StringField()
     res_number = models.IntegerField()
 
-    corp_profit = models.IntegerField()
-    core_pollution = models.IntegerField()
-    res_total_health = models.IntegerField()
-
     def set_treatment(self, treatment):
         """
            把treatment:str写入Group以及其下的Players的treatment属性里
@@ -156,6 +152,23 @@ class Group(BaseGroup):
         if self.treatment == "res_3":
             set_profit_core([p2, p3, p4], [p1], hv, lv)
             set_profit_core([p6, p7, p8], [p5], hv, lv)
+
+    def set_final_payoff(self):
+        # Constants.pay_rounds
+        p: Player
+        pp: Player
+        all_p: List[Player]
+
+        for p in self.get_players():
+            all_p = p.in_all_rounds()
+            pay_p = [pp for idp, pp in enumerate(all_p) if idp in Constants.pay_rounds]
+            pay_p_profit_list = [pp.profit for pp in pay_p]
+            p.profit_list_str = ', '.join(str(x) for x in pay_p_profit_list)
+            p.total_profit = sum(pay_p_profit_list)
+            p.payoff = round(p.total_profit / self.session.vars['points_for_one_yuan'], 2) + self.session.vars[
+                'participation_fee']
+
+            p.participant.payoff = p.payoff
 
 
 def set_treatment_for_all(gs: List[Group], round_number: int):
@@ -227,6 +240,12 @@ class Player(BasePlayer):
 
     profit = models.FloatField()
 
+    # 被抽中轮次的代币之和
+    total_profit = models.FloatField()
+
+    # 被抽中轮次的代币，以逗号分隔
+    profit_list_str = models.StringField()
+
     # 一个人不可能同时担任2种角色，因此一个price表示他们的选择即可
 
     # 参与人输入的数字
@@ -266,8 +285,8 @@ def set_profit_core(seller_list: List[Player], buyer_list: List[Player], high_va
     seller_price_list = [p.price for p in seller_list]
     buyer_price_list = [p.price for p in buyer_list]
 
-    seller_price_list_str = '、'.join(str(x) for x in [p.price for p in seller_list])
-    buyer_price_list_str = '、'.join(str(x) for x in [p.price for p in buyer_list])
+    seller_price_list_str = ','.join(str(x) for x in [p.price for p in seller_list])
+    buyer_price_list_str = ','.join(str(x) for x in [p.price for p in buyer_list])
 
     seller_price_total = sum(seller_price_list)
     buyer_price_total = sum(buyer_price_list)
