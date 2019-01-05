@@ -26,12 +26,7 @@ class ResultsWaitPage(WaitPage):
             else:
                 p.profit = Constants.endowment
 
-            p.payoff = round(p.profit / self.session.config['points_for_one_yuan'], 2)
-
-            if p.participant.payoff is None:
-                p.participant.payoff = 0
-
-            p.participant.payoff += p.payoff
+            p.payoff = p.profit
 
 
 class Results(Page):
