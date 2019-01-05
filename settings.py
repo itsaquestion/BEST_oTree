@@ -61,7 +61,8 @@ AWS_SECRET_ACCESS_KEY = environ.get('AWS_SECRET_ACCESS_KEY')
 
 # e.g. EUR, CAD, GBP, CHF, CNY, JPY
 REAL_WORLD_CURRENCY_CODE = 'CNY'
-USE_POINTS = False
+USE_POINTS = True
+POINTS_CUSTOM_NAME = '代币'
 
 # e.g. en, de, fr, it, ja, zh-hans
 # see: https://docs.djangoproject.com/en/1.9/topics/i18n/#term-language-code
@@ -117,7 +118,7 @@ mturk_hit_settings = {
 # e.g. self.session.config['participation_fee']
 
 SESSION_CONFIG_DEFAULTS = {
-    'real_world_currency_per_point': 0.00,
+    'real_world_currency_per_point': 0.10,
     'participation_fee': 0.00,
     'doc': "",
     'mturk_hit_settings': mturk_hit_settings,
@@ -358,7 +359,6 @@ SESSION_CONFIGS = [
         'app_sequence': [
             'Coase'
         ],
-        'points_for_one_yuan': 10,
         'game_time_sec': 15,
         'debug_mode': True,
         'participation_fee': 15,
@@ -372,7 +372,6 @@ SESSION_CONFIGS = [
         'app_sequence': [
             'Coase'
         ],
-        'points_for_one_yuan': 10,
         'game_time_sec': 15,
         'debug_mode': True,
         'participation_fee': 15,
@@ -383,14 +382,12 @@ SESSION_CONFIGS = [
         'name': 'public_goods_survey_risk',
         'display_name': "Public Goods & Survey Risk",
         'num_demo_participants': 3,
-        'points_for_one_yuan': 10,
         'app_sequence': ['public_goods', 'survey_risk'],
     },
     {
         'name': 'survey_risk',
         'display_name': "Survey: Risk",
         'num_demo_participants': 1,
-        'points_for_one_yuan': 10,
         'app_sequence': ['survey_risk'],
     },
     # {

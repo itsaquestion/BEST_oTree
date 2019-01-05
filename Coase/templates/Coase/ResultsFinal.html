@@ -12,11 +12,11 @@
     </p>
 
     <p>
-        所获得代币分别是：{{ player.profit_list_str }}，总和是{{ player.total_profit }}
+        所获得代币分别是：{{ player.profit_list_str }}，总和是{{ player.total_profit }}代币。
     </p>
 
     <p>
-        出场费为{{ session.vars.participation_fee }}元，因此你报酬为{{ player.payoff }}元。
+        出场费为{{ session.vars.participation_fee }}元，因此你报酬为{{ player.participant.payoff_plus_participation_fee}}元。
     </p>
 
 

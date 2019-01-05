@@ -74,6 +74,9 @@ class Requirement(Page):
     def is_displayed(self):
         return self.round_number == 1
 
+    def vars_for_template(self):
+        return {'points_for_one_yuan': self.session.config['real_world_currency_per_point']}
+
 
 class Blank(Page):
     def is_displayed(self):

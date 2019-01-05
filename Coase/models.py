@@ -30,7 +30,6 @@ class Subsession(BaseSubsession):
         # 读取全局设置
         # =================================================================
         self.session.vars['is_debug'] = self.session.config['debug_mode']
-        self.session.vars['points_for_one_yuan'] = self.session.config['points_for_one_yuan']
         self.session.vars['participation_fee'] = self.session.config['participation_fee']
 
         # =================================================================
@@ -153,6 +152,11 @@ class Group(BaseGroup):
             set_profit_core([p2, p3, p4], [p1], hv, lv)
             set_profit_core([p6, p7, p8], [p5], hv, lv)
 
+        if self.round_number in Constants.pay_rounds:
+            p: Player
+            for p in self.get_players():
+                p.payoff = p.profit
+
     def set_final_payoff(self):
         # Constants.pay_rounds
         p: Player
@@ -161,14 +165,14 @@ class Group(BaseGroup):
 
         for p in self.get_players():
             all_p = p.in_all_rounds()
-            pay_p = [pp for idp, pp in enumerate(all_p) if idp in Constants.pay_rounds]
+            pay_p = [pp for idp, pp in enumerate(all_p) if (idp + 1) in Constants.pay_rounds]
             pay_p_profit_list = [pp.profit for pp in pay_p]
             p.profit_list_str = ', '.join(str(x) for x in pay_p_profit_list)
             p.total_profit = sum(pay_p_profit_list)
-            p.payoff = round(p.total_profit / self.session.vars['points_for_one_yuan'], 2) + self.session.vars[
-                'participation_fee']
-
-            p.participant.payoff = p.payoff
+            # p.payoff = round(p.total_profit / self.session.vars['points_for_one_yuan'], 2) + self.session.vars[
+            #     'participation_fee']
+            #
+            # p.participant.payoff = p.payoff
 
 
 def set_treatment_for_all(gs: List[Group], round_number: int):
