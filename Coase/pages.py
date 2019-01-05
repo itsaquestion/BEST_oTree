@@ -81,15 +81,15 @@ class Blank(Page):
 
 
 page_sequence = [
-    # Requirement,
-    # Preface,
-    # IntroCorp,
-    # IntroRes,
+    Requirement,
+    Preface,
+    IntroCorp,
+    IntroRes,
     ChoiceCorp,
     ChoiceRes,
     ResultsWaitPage,
-    # ResultsCorp,
-    # ResultsRes
+    ResultsCorp,
+    ResultsRes,
     ResultsFinalWaitPage,
     ResultsFinal
 
