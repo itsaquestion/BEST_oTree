@@ -75,7 +75,7 @@ class Requirement(Page):
         return self.round_number == 1
 
     def vars_for_template(self):
-        return {'points_for_one_yuan': self.session.config['real_world_currency_per_point']}
+        return {'points_for_one_yuan': round(1 / self.session.config['real_world_currency_per_point'])}
 
 
 class Blank(Page):
