@@ -382,13 +382,25 @@ SESSION_CONFIGS = [
         'name': 'public_goods_survey_risk',
         'display_name': "Public Goods & Survey Risk",
         'num_demo_participants': 3,
-        'app_sequence': ['public_goods', 'survey_risk'],
+        'app_sequence': ['public_goods', 'survey_environment'],
     },
     {
-        'name': 'survey_risk',
+        'name': 'survey_environment',
         'display_name': "Survey: Risk",
         'num_demo_participants': 1,
-        'app_sequence': ['survey_risk'],
+        'app_sequence': ['survey_environment'],
+    },
+    {
+        'name': 'survey_basic_info',
+        'display_name': "Survey: Basic Information",
+        'num_demo_participants': 1,
+        'app_sequence': ['survey_basic_info'],
+    },
+    {
+        'name': 'survey_environment',
+        'display_name': "Survey: Environment",
+        'num_demo_participants': 1,
+        'app_sequence': ['survey_environment'],
     },
     # {
     #     'name': 'survey',

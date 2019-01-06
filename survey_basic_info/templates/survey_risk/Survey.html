@@ -1,0 +1,20 @@
+{% extends "Coase/__PageBase.html" %}
+{% load otree static %}
+
+{% block title %}
+    基本信息问卷
+{% endblock %}
+
+{% block content %}
+    <p>以下问题用于了解你的一些基本信息。你填写的所有信息仅用于学术研究，绝不会用于任何商业用途。
+        所涉及的任何个人信息我们将进行保密，绝不外泄，感谢你对我们科研的支持。
+        以下所有问题为必填题，填写完问卷，我们将对你支付报酬。</p>
+
+
+    {% for field in form %}
+        {% formfield field %}
+    {% endfor %}
+
+    {% next_button %}
+
+{% endblock %}

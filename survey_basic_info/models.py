@@ -14,7 +14,7 @@ Your app description
 
 
 class Constants(BaseConstants):
-    name_in_url = 'survey_environment'
+    name_in_url = 'survey_basic_info'
     players_per_group = None
     num_rounds = 1
 

@@ -1,0 +1,19 @@
+{% extends "Coase/__PageBase.html" %}
+{% load otree static %}
+
+{% block title %}
+    环境问题量表
+{% endblock %}
+
+{% block content %}
+    <p>下面是询问你关于环境问题的一些观点，选项1～5代表不同的赞成度（1=非常不赞成，5=非常赞成），
+        请你根据自己的真实想法选择对应的选项。</p>
+
+
+    {% for field in form %}
+        {% formfield field %}
+    {% endfor %}
+
+    {% next_button %}
+
+{% endblock %}
