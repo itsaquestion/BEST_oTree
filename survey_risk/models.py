@@ -54,7 +54,8 @@ def make_question_string(i: int):
 class Player(BasePlayer):
     pay_round = models.IntegerField()
     choice = models.StringField()
-    profit = models.FloatField()
+    win = models.BooleanField()
+
 
     sur_q01 = make_survey_field(1)
 

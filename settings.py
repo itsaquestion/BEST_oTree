@@ -382,7 +382,7 @@ SESSION_CONFIGS = [
         'name': 'public_goods_survey_risk',
         'display_name': "Public Goods & Survey Risk",
         'num_demo_participants': 3,
-        'app_sequence': ['public_goods', 'survey_environment'],
+        'app_sequence': ['public_goods', 'survey_risk'],
     },
     {
         'name': 'survey_environment',
