@@ -386,7 +386,7 @@ SESSION_CONFIGS = [
     },
     {
         'name': 'survey_environment',
-        'display_name': "Survey: Risk",
+        'display_name': "Survey: Environment",
         'num_demo_participants': 1,
         'app_sequence': ['survey_environment'],
     },
@@ -397,11 +397,12 @@ SESSION_CONFIGS = [
         'app_sequence': ['survey_basic_info'],
     },
     {
-        'name': 'survey_environment',
-        'display_name': "Survey: Environment",
+        'name': 'survey_risk',
+        'display_name': "Survey: Risk",
         'num_demo_participants': 1,
-        'app_sequence': ['survey_environment'],
+        'app_sequence': ['survey_risk'],
     },
+
     # {
     #     'name': 'survey',
     #     'display_name': "Survey",

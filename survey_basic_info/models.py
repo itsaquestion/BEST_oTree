@@ -18,56 +18,90 @@ class Constants(BaseConstants):
     players_per_group = None
     num_rounds = 1
 
-    endowment = 50
-
 
 class Subsession(BaseSubsession):
     def creating_session(self):
-        for p in self.get_players():
-            p.pay_round = random.randint(1, 8)
+        pass
 
 
 class Group(BaseGroup):
     pass
 
 
-def make_survey_field(n: int):
-    return models.StringField(
-        choices=['接受', '拒绝'],
-        verbose_name=make_question_string(n),
+class Player(BasePlayer):
+    sur_gender = models.StringField(
+        choices=['男', '女'],
+        verbose_name="你的性别是",
+        widget=widgets.RadioSelectHorizontal)
+
+    sur_birth_year = models.IntegerField(verbose_name="你出生的年份是")
+    sur_birth_month = models.IntegerField(verbose_name="你出生的月份是(1-12)", min=1, max=12)
+
+    sur_nationality = models.StringField(
+        verbose_name="你的民族是",
+        choices=['汉族', '少数民族'],
         widget=widgets.RadioSelectHorizontal
     )
 
+    sur_minority = models.StringField(
+        verbose_name="如果你是少数民族，请填写你的民族",
+        max_length=5
+    )
 
-def make_question_string(i: int):
-    """
-     生成提问字符串
-    :param i:
-    :return:
-    """
+    sur_party_member = models.StringField(
+        verbose_name="你是否为党员",
+        choices=['是', '否'],
+        widget=widgets.RadioSelectHorizontal
+    )
 
-    token = (11 - i) * 10
-    s = Template('（$number） 50%的可能，你将损失$endowment个代币；50%的可能，你将得到$token代币')
-    return s.substitute(number=str(i), token=str(token), endowment=str(Constants.endowment))
+    sur_student_leader = models.StringField(
+        verbose_name="你在大学期间是否担任学生干部",
+        choices=['是', '否'],
+        widget=widgets.RadioSelectHorizontal
+    )
 
+    sur_school = models.StringField(
+        verbose_name="你就读的学院为")
 
-class Player(BasePlayer):
-    pay_round = models.IntegerField()
-    choice = models.StringField()
-    profit = models.FloatField()
+    sur_grade = models.StringField(
+        choices=['大一', '大二', '大三', '大四', '研一', '研二'],
+        verbose_name="你就读的年级为",
+        widget=widgets.RadioSelectHorizontal)
 
-    sur_q01 = make_survey_field(1)
+    sur_height = models.IntegerField(verbose_name="你的身高为(cm)")
 
-    sur_q02 = make_survey_field(2)
+    sur_weight = models.IntegerField(verbose_name="你的体重为(kg)")
 
-    sur_q03 = make_survey_field(3)
+    sur_expenses = models.IntegerField(verbose_name="你每个月的生活费平均有(元)")
 
-    sur_q04 = make_survey_field(4)
+    sur_n_big_bro = models.IntegerField(verbose_name="你的亲哥哥的数量为(没有请填0)")
 
-    sur_q05 = make_survey_field(5)
+    sur_n_big_sis = models.IntegerField(verbose_name="你的亲姐姐的数量为(没有请填0)")
 
-    sur_q06 = make_survey_field(6)
+    sur_n_small_bro = models.IntegerField(verbose_name="你的亲弟弟的数量为(没有请填0)")
 
-    sur_q07 = make_survey_field(7)
+    sur_n_small_sis = models.IntegerField(verbose_name="你的亲妹妹的数量为(没有请填0)")
 
-    sur_q08 = make_survey_field(8)
+    sur_m_edu = models.StringField(
+        choices=['小学及以下', '初中', '高中', '大学及以上'],
+        verbose_name="你母亲的最高学历是",
+        widget=widgets.RadioSelectHorizontal)
+
+    sur_f_edu = models.StringField(
+        choices=['小学及以下', '初中', '高中', '大学及以上'],
+        verbose_name="你父亲的最高学历是",
+        widget=widgets.RadioSelectHorizontal)
+
+    sur_urban_rural = models.StringField(
+        choices=['农村', '城镇'],
+        verbose_name="你是来自农村还是城镇",
+        widget=widgets.RadioSelectHorizontal)
+
+    sur_birth_province = models.StringField(
+        verbose_name='你出生的省份（自治区、直辖市），请填省区名前两个字（比如四川、新疆）'
+    )
+
+    sur_family_income = models.IntegerField(
+        choices=['5万以下', '5万-10万','10万-25万','25万-50万','50万-100万','100万及以上'],
+        verbose_name = '你的家庭年总收入大概的范围是'
+    )

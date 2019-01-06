@@ -32,7 +32,7 @@ class Group(BaseGroup):
 
 def make_survey_field(n: int, msg: str):
     return models.StringField(
-        choices=['非常不赞成', '不赞成', '持中', '赞成', '非常赞成'],
+        choices=['1.非常不赞成', '2.不赞成', '3.持中', '4.赞成', '5.非常赞成'],
         verbose_name=str(n) + ". " + msg,
         widget=widgets.RadioSelectHorizontal
     )

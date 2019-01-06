@@ -6,27 +6,13 @@ import random
 
 class Survey(Page):
     form_model = 'player'
-    form_fields = ['sur_q01', 'sur_q02', 'sur_q03', 'sur_q04',
-                   'sur_q05', 'sur_q06', 'sur_q07', 'sur_q08']
-
-
-class ResultsWaitPage(WaitPage):
-
-    def after_all_players_arrive(self):
-        for p in self.group.get_players():
-            pay_round = p.pay_round
-
-            p.choice = getattr(p, "sur_q0" + str(pay_round))
-
-            if p.choice == "接受":
-                if random.choice([0, 1]) == 0:
-                    p.profit = 0
-                else:
-                    p.profit = (11 - p.pay_round) * 10
-            else:
-                p.profit = Constants.endowment
-
-            p.payoff = p.profit
+    form_fields = ['sur_gender', 'sur_birth_year', 'sur_birth_month',
+                   'sur_nationality', 'sur_minority','sur_party_member',
+                   'sur_student_leader','sur_school','sur_grade',
+                   'sur_height','sur_weight','sur_expenses',
+                   'sur_n_big_bro','sur_n_big_sis','sur_n_small_bro',
+                   'sur_n_small_sis','sur_m_edu','sur_f_edu',
+                   'sur_urban_rural','sur_birth_province','sur_family_income']
 
 
 class Results(Page):
@@ -35,7 +21,6 @@ class Results(Page):
 
 
 page_sequence = [
-    Survey,
-    ResultsWaitPage,
-    Results
+    Survey
+
 ]
