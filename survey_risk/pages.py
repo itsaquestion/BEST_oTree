@@ -11,9 +11,8 @@ class Survey(Page):
 
     def before_next_page(self):
         p = self.player
-        pay_round = p.pay_round
 
-        p.choice = getattr(p, "sur_q0" + str(pay_round))
+        p.choice = getattr(p, "sur_q0" + str(p.pay_round))
 
         if str(p.choice) == "接受":
             if random.choice([0, 1]) == 0:
@@ -25,11 +24,22 @@ class Survey(Page):
         else:
             p.payoff = Constants.endowment
 
+        win_str = "赢" if self.player.win else "输"
+        # pay_round = p.pay_round
+        # choice = p.choice
+        # payoff = p.payoff
+
+        risk_result_html = """
+        <p>被随机抽取的赌局决策结果是第<b>{p.pay_round}</b>项，你的选择是<b>{p.choice}</b>赌局。</p>
+        <p>结果是：{win_str}。</p>
+        <p>因此你获得了{p.payoff}。</p>
+        """
+
+        self.participant.vars['risk_result_html'] = risk_result_html.format_map(vars())
+
 
 class Results(Page):
-    def vars_for_template(self):
-        return {'gamble_choice': self.player.choice,
-                'win': "赢" if self.player.win else "输"}
+    pass
 
 
 page_sequence = [

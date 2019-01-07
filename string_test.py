@@ -18,10 +18,10 @@ print(a_utf8)
 print(len(a_utf8))
 print(type(a_utf8))
 
-# %% adsf
-file = open("test.txt", mode="w", encoding="utf8")
-file.write(a_utf8)
-file.close()
+# # %% adsf
+# file = open("test.txt", mode="w", encoding="utf8")
+# file.write(a_utf8)
+# file.close()
 
 # %%  adsf
 file2 = open("test.txt", mode="r", encoding="utf8")
@@ -44,3 +44,9 @@ def add2(a: int, b: int) -> int:
 
 
 add2(1.2, 2)
+
+print("""
+adsf
+adsf
+asdf
+""")
