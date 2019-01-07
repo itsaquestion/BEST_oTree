@@ -30,12 +30,21 @@ class Survey(Page):
         # payoff = p.payoff
 
         risk_result_html = """
-        <p>被随机抽取的赌局决策结果是第<b>{p.pay_round}</b>项，你的选择是<b>{p.choice}</b>赌局。</p>
-        <p>结果是：{win_str}。</p>
+        <p>被随机抽中的赌局决策是第<b>{p.pay_round}</b>项，你的选择是<b>{p.choice}</b>赌局。</p>
+        """
+
+        win_html = """
+        <p>结果是： {win_str}
+        """
+
+        payoff_html = """
         <p>因此你获得了{p.payoff}。</p>
         """
 
-        self.participant.vars['risk_result_html'] = risk_result_html.format_map(vars())
+        if str(p.choice) == "接受":
+            self.participant.vars['risk_result_html'] = (risk_result_html + win_html + payoff_html).format_map(vars())
+        else:
+            self.participant.vars['risk_result_html'] = (risk_result_html + payoff_html).format_map(vars())
 
 
 class Results(Page):
