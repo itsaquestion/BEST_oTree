@@ -31,9 +31,7 @@ class ResultsFinal(Page):
         return self.round_number == Constants.num_rounds
 
     def vars_for_template(self):
-        return {
-            'pay_rounds_str': ', '.join([str(x) for x in Constants.pay_rounds])
-        }
+        pass
 
 
 class IntroCorp(Page):
@@ -94,6 +92,6 @@ page_sequence = [
     ResultsCorp,
     ResultsRes,
     ResultsFinalWaitPage,
-    ResultsFinal
+    #ResultsFinal
 
 ]

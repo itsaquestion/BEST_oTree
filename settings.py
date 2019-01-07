@@ -402,7 +402,53 @@ SESSION_CONFIGS = [
         'num_demo_participants': 1,
         'app_sequence': ['survey_risk'],
     },
+    {
+        'name': 'survey_risk_payment',
+        'display_name': "Survey: Risk + Payment",
+        'participation_fee': 15,
+        'num_demo_participants': 1,
+        'app_sequence': ['survey_risk', 'Coase_payment'],
+    },
 
+    {
+        'name': 'coase_svrisk_payment_8',
+        'display_name': "Coase Theorem + Survey: Risk + Payment (8P)",
+        'num_demo_participants': 8,
+        'app_sequence': [
+            'Coase', 'survey_risk', 'Coase_payment'
+        ],
+        # 'game_time_sec': 15,
+        'debug_mode': False,
+        'participation_fee': 15,
+        'high_value': 189,
+        'low_value': 99
+    },
+    {
+        'name': 'coase_svrisk_svenv_svbasic_payment_8',
+        'display_name': "Coase Theorem + Survey: Risk + Survey: Environment + Survey: Basic Information + Payment (8P)",
+        'num_demo_participants': 8,
+        'app_sequence': [
+            'Coase', 'survey_risk', 'survey_environment', 'survey_basic_info', 'Coase_payment'
+        ],
+        # 'game_time_sec': 15,
+        'debug_mode': False,
+        'participation_fee': 15,
+        'high_value': 189,
+        'low_value': 99
+    },
+    {
+        'name': 'coase_svrisk_svenv_svbasic_payment_24',
+        'display_name': "Coase Theorem + Survey: Risk + Survey: Environment + Survey: Basic Information + Payment (24P)",
+        'num_demo_participants': 24,
+        'app_sequence': [
+            'Coase', 'survey_risk', 'survey_environment', 'survey_basic_info', 'Coase_payment'
+        ],
+        #'game_time_sec': 15,
+        'debug_mode': False,
+        'participation_fee': 15,
+        'high_value': 189,
+        'low_value': 99
+    },
     # {
     #     'name': 'survey',
     #     'display_name': "Survey",

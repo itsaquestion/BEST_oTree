@@ -169,10 +169,20 @@ class Group(BaseGroup):
             pay_p_profit_list = [pp.profit for pp in pay_p]
             p.profit_list_str = ', '.join(str(x) for x in pay_p_profit_list)
             p.total_profit = sum(pay_p_profit_list)
+            pay_rounds_str = ', '.join([str(x) for x in Constants.pay_rounds])
+
             # p.payoff = round(p.total_profit / self.session.vars['points_for_one_yuan'], 2) + self.session.vars[
             #     'participation_fee']
             #
             # p.participant.payoff = p.payoff
+
+            coase_results_html = """
+                <p>电脑在6个任务总共30轮中随机抽取了3轮，并根据这3轮的结果的总和来支付实验报酬。</p>
+                <p>这3轮分别是：{pay_rounds_str}</p>
+                <p>所获得代币分别是：{p.profit_list_str}，总和是{p.total_profit}代币。</p>
+            """
+
+            p.participant.vars['coase_results_html'] = coase_results_html.format_map(vars())
 
 
 def set_treatment_for_all(gs: List[Group], round_number: int):

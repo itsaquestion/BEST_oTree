@@ -44,5 +44,5 @@ class Results(Page):
 
 page_sequence = [
     Survey,
-    Results
+    #Results
 ]

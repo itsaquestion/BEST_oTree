@@ -6,17 +6,9 @@
 {% endblock %}
 
 {% block content %}
-    <p>电脑在6个任务总共30轮中随机抽取了3轮，并根据这3轮的结果的总和来支付实验报酬。</p>
+    {{ participant.vars.coase_results_html |safe }}
     <p>
-        这3轮分别是：{{ pay_rounds_str }}
-    </p>
-
-    <p>
-        所获得代币分别是：{{ player.profit_list_str }}，总和是{{ player.total_profit }}代币。
-    </p>
-
-    <p>
-        出场费为{{ session.vars.participation_fee }}元，因此你报酬为{{ player.participant.payoff_plus_participation_fee}}元。
+        出场费为{{ session.vars.participation_fee }}元，因此你报酬为{{ player.participant.payoff_plus_participation_fee }}元。
     </p>
 
 

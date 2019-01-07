@@ -1,0 +1,19 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    支付信息
+{% endblock %}
+
+{% block content %}
+    {{ participant.vars.coase_results_html |safe }}
+    <hr>
+    {{ participant.vars.risk_result_html | safe }}
+    <hr>
+
+    <p>
+        你总共获得{{ player.participant.payoff }}，
+        出场费为{{ session.config.participation_fee }}元，
+        因此你最终的报酬为{{ player.participant.payoff_plus_participation_fee }}元。
+    </p>
+{% endblock %}
