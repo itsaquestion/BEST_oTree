@@ -38,14 +38,7 @@ class Player(BasePlayer):
     sur_birth_month = models.IntegerField(verbose_name="你出生的月份是(1-12)", min=1, max=12)
 
     sur_nationality = models.StringField(
-        verbose_name="你的民族是",
-        choices=['汉族', '少数民族'],
-        widget=widgets.RadioSelectHorizontal
-    )
-
-    sur_minority = models.StringField(
-        verbose_name="如果你是少数民族，请填写你的民族",
-        max_length=5
+        verbose_name="你的民族是"
     )
 
     sur_party_member = models.StringField(
@@ -101,7 +94,7 @@ class Player(BasePlayer):
         verbose_name='你出生的省份（自治区、直辖市），请填省区名前两个字（比如四川、新疆）'
     )
 
-    sur_family_income = models.IntegerField(
+    sur_family_income = models.StringField(
         choices=['5万以下', '5万-10万','10万-25万','25万-50万','50万-100万','100万及以上'],
         verbose_name = '你的家庭年总收入大概的范围是'
     )

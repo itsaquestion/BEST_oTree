@@ -56,7 +56,6 @@ class Player(BasePlayer):
     choice = models.StringField()
     win = models.BooleanField()
 
-
     sur_q01 = make_survey_field(1)
 
     sur_q02 = make_survey_field(2)

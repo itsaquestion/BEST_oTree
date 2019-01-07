@@ -9,7 +9,7 @@ BROWSER_COMMAND = 'C:/Program Files/Mozilla Firefox/firefox.exe'
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# SENTRY_DSN = 'http://38b3b3045f244cf8bf5e8c9b60a4aa01:222bf70e524b4259a1723171cf59224f@sentry.otree.org/96'
+SENTRY_DSN = 'http://38b3b3045f244cf8bf5e8c9b60a4aa01:222bf70e524b4259a1723171cf59224f@sentry.otree.org/96'
 
 # the environment variable OTREE_PRODUCTION controls whether Django runs in
 # DEBUG mode. If OTREE_PRODUCTION==1, then DEBUG=False

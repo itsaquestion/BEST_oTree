@@ -19,7 +19,7 @@ class Survey(Page):
                 p.payoff = 0
                 p.win = False
             else:
-                p.payoff = (11 - p.pay_round) * 10
+                p.payoff = Constants.endowment + (11 - p.pay_round) * 10
                 p.win = True
         else:
             p.payoff = Constants.endowment
@@ -44,5 +44,5 @@ class Results(Page):
 
 page_sequence = [
     Survey,
-    #Results
+    # Results
 ]
