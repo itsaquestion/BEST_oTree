@@ -1,0 +1,14 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    结果
+{% endblock %}
+
+{% block content %}
+    <p>最终成绩: {{ player.correct_final }}</p>
+    <p>最终胜负: {{ player.win_final }}</p>
+    {% next_button %}
+{% endblock %}
+
+

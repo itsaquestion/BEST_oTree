@@ -1,0 +1,30 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    第三轮游戏：
+{% endblock %}
+
+{% block content %}
+
+
+    <p>
+        在这一轮游戏里，每人有<b>{{ Constants.timeout_game_min }}</b>分钟来进行这个编码游戏。
+        在本轮游戏之前，请选择是否愿意跟别人比赛。
+        如果选择不比赛，你们每正确编码一个汉字，将获得<b>1</b>分。
+        如果选择比赛，你的得分会由比赛结果决定。
+        你的对手的身份是保密的，并且和第一轮游戏的对手不同。
+        和第一轮游戏一样，获胜的同学每正确编码一个汉字，将获得<b>2</b>分；
+        失败的同学将获得<b>0</b>分；如果你们正确编码的个数一样，你们每人都会获得<b>1</b>分。
+
+    </p>
+
+    <p>
+    {% formfield player.will_compete_03 label="你的选择是"%}
+    </p>
+
+    {% next_button %}
+
+
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    第二轮游戏
+{% endblock %}
+
+{% block content %}
+
+
+    <p>
+    在这一轮游戏里，每人有<b>{{ Constants.timeout_game_min}}</b>分钟来进行这个编码游戏。
+        在本轮游戏之前，请每个人给自己设定一个目标，如果你完成了自己设定的目标，
+        你将获得相当于(你设定的目标数量×1的分数)；如果你没有完成自己设定的目标，你将得到<b>0</b>分。
+    </p>
+
+    <p>
+    你的目标是：正确编码{% formfield player.target_02 label=""%}个汉字
+    </p>
+
+    {% next_button %}
+
+{% endblock %}

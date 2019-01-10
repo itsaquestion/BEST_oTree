@@ -1,0 +1,153 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+
+{% block scripts %}
+
+    <!-- define a script -->
+    <script>
+
+        var dict_real = null;
+        var n = null;
+
+        var dict_practice = null;
+
+        var words_real = null;
+        var words_practice = null;
+
+        var candidate = null;
+        var right_number = 0;
+
+        var i = 0;
+        
+        var total = 0;
+        var correct = 0;
+
+        var is_debug = true;
+
+        var is_practice= {% block is_practice %}false{% endblock %};
+        var practice_counter = 0;
+
+        window.onload = function(){
+
+            dict_real = {{ Constants.words_numbers_47|json }};
+            dict_practice = {{ Constants.words_numbers_03|json }};
+            n = {{ Constants.dict_size }};
+            is_debug = {{ Constants.is_debug|yesno:"true,false" }};
+
+            words_real = Object.keys(dict_real);
+            words_practice = Object.keys(dict_practice);
+            //document.getElementById("test").innerHTML = words_real;
+
+            if(is_debug){
+                document.getElementById("debug_block").innerHTML =
+                    "<div class=\"panel panel-default\">" +
+                    "<div class=\"panel-heading\">内部数据</div>"+
+                    " <p> 答案：</p>\n" +
+                    "        <p id=\"cheat\"></p>\n" +
+
+                    "        <br>\n" +
+
+                    "        <p>总数: </p>\n" +
+                    "        <p id=\"ui_total\">0</p>\n" +
+
+                    "        <p>答对数量: </p>\n" +
+                    "        <p id=\"ui_correct\">0</p>\n" +
+
+                    "        <br>" +
+                    "</div>"
+            }
+            pickOne();
+        };
+
+
+        function pickOne()
+        {
+            if(!is_practice){
+                i = Math.floor(n*Math.random());
+                candidate = words_real[i];
+                right_number = dict_real[candidate];
+            }else{
+                i = practice_counter;
+                practice_counter ++;
+                candidate = words_practice[i];
+                right_number = dict_practice[candidate];
+            }
+
+
+            if(is_debug){
+                document.getElementById("cheat").innerHTML= candidate + " : "+ right_number;
+            }
+
+            document.getElementById("word").innerHTML = candidate;
+        }
+
+        function ok(){
+
+
+            total ++ ;
+            if(is_debug) {
+                document.getElementById("ui_total").innerHTML = total;
+            }
+            document.getElementById("id_total").value = total;
+
+            if(document.getElementById('number').value == right_number){
+                correct ++;
+                if(is_debug) {
+                    document.getElementById("ui_correct").innerHTML = correct;
+                }
+                document.getElementById("id_correct").value = correct;
+
+                document.getElementById('number').focus();
+                document.getElementById('number').select();
+            }
+
+            if(is_practice & practice_counter == 3){return;}
+            pickOne();
+        };
+
+    </script>
+
+
+{% endblock %}
+
+{% block title %}
+    查找数字
+{% endblock %}
+
+{% block content %}
+
+    请把文字对应的编码输入框内，输入完毕后按Enter键或者确定键继续。
+
+    <br><br><br>
+    <h4>请查找：</h4>
+    <h1 id="word"></h1>
+    <br>
+
+    <h4>对应的数字是：</h4>
+    <input type="text" name="number" id="number"
+        onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+        onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+        onkeydown="if(event.keyCode==13){ok();return false;}"
+    >
+
+    <input type="button" value="确定" onClick="ok()">
+
+    <br><br>
+
+
+    <!-- <h1 id="result"></h1> -->
+
+
+    <p id="debug_block">
+
+
+    </p>
+
+
+    <input type="hidden" name={% block name_input_total %}{% endblock %} value="0" id="id_total"/>
+    <input type="hidden" name={% block name_input_correct %}{% endblock %} value="0" id="id_correct"/>
+
+
+{% endblock %}
+

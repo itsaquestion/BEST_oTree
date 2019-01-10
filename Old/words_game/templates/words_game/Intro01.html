@@ -1,0 +1,21 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    第一轮游戏
+{% endblock %}
+
+{% block content %}
+
+
+   <p>
+        在这一轮游戏里，你需要与另外一名同学比赛，这名同学的身份是保密的。
+        你们两个人中，正确编码个数多的同学获胜。获胜的同学每正确编码一个汉字，将获得<b>2</b>分；失败的同学将获得<b>0</b>分；
+        如果你们正确编码的个数一样，你们每人都会获得<b>1</b>分。
+        每个人有<b>{{ Constants.timeout_game_min }}</b>分钟来进行刚才的编码游戏。
+        有疑问请提出。
+    </p>
+
+
+
+{% endblock %}
