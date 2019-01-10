@@ -18,10 +18,10 @@ print(a_utf8)
 print(len(a_utf8))
 print(type(a_utf8))
 
-# # %% adsf
-# file = open("test.txt", mode="w", encoding="utf8")
-# file.write(a_utf8)
-# file.close()
+# %% adsf
+file = open("test.txt", mode="w", encoding="utf8")
+file.write(a)
+file.close()
 
 # %%  adsf
 file2 = open("test.txt", mode="r", encoding="utf8")
@@ -50,3 +50,14 @@ adsf
 adsf
 asdf
 """)
+
+import os
+
+cwd = os.getcwd()
+print(cwd)
+
+path = cwd + "/words_game_normal/dicts/3500常用字.txt"
+
+
+
+

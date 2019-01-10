@@ -338,91 +338,91 @@ SESSION_CONFIGS = [
         'debug_mode': True,
         'participation_fee': 15,
     },
-    {
-        'name': 'repeat_prisoner_debug',
-        'display_name': "Repeat Prisoner's Dilemma (测试用)",
-        'num_demo_participants': 2,
-        'app_sequence': ['repeat_prisoner'],
-        'debug_mode': True,
-    },
-    {
-        'name': 'repeat_prisoner',
-        'display_name': "Repeat Prisoner's Dilemma (正式用)",
-        'num_demo_participants': 2,
-        'app_sequence': ['repeat_prisoner'],
-        'debug_mode': False,
-    },
-    {
-        'name': 'coase_debug_24',
-        'display_name': "Coase Theorem (Debug 24P)",
-        'num_demo_participants': 24,
-        'app_sequence': [
-            'Coase'
-        ],
-        'game_time_sec': 15,
-        'debug_mode': True,
-        'participation_fee': 15,
-        'high_value': 189,
-        'low_value': 99
-    },
-    {
-        'name': 'coase_debug_8',
-        'display_name': "Coase Theorem (Debug 8P)",
-        'num_demo_participants': 8,
-        'app_sequence': [
-            'Coase'
-        ],
-        'game_time_sec': 15,
-        'debug_mode': True,
-        'participation_fee': 15,
-        'high_value': 189,
-        'low_value': 99
-    },
-    {
-        'name': 'public_goods_survey_risk',
-        'display_name': "Public Goods & Survey Risk",
-        'num_demo_participants': 3,
-        'app_sequence': ['public_goods', 'survey_risk'],
-    },
-    {
-        'name': 'survey_environment',
-        'display_name': "Survey: Environment",
-        'num_demo_participants': 1,
-        'app_sequence': ['survey_environment'],
-    },
-    {
-        'name': 'survey_basic_info',
-        'display_name': "Survey: Basic Information",
-        'num_demo_participants': 1,
-        'app_sequence': ['survey_basic_info'],
-    },
-    {
-        'name': 'survey_risk',
-        'display_name': "Survey: Risk",
-        'num_demo_participants': 1,
-        'app_sequence': ['survey_risk'],
-    },
-    {
-        'name': 'survey_risk_payment',
-        'display_name': "Survey: Risk + Payment",
-        'participation_fee': 15,
-        'num_demo_participants': 1,
-        'app_sequence': ['survey_risk', 'Coase_payment'],
-    },
-
-    {
-        'name': 'coase_svrisk_payment_8',
-        'display_name': "Coase Theorem + Survey: Risk + Payment (8P)",
-        'num_demo_participants': 8,
-        'app_sequence': [
-            'Coase', 'survey_risk', 'Coase_payment'
-        ],
-        # 'game_time_sec': 15,
-        'debug_mode': False,
-        'participation_fee': 15,
-        'high_value': 189,
-        'low_value': 99
-    },
+    # {
+    #     'name': 'repeat_prisoner_debug',
+    #     'display_name': "Repeat Prisoner's Dilemma (测试用)",
+    #     'num_demo_participants': 2,
+    #     'app_sequence': ['repeat_prisoner'],
+    #     'debug_mode': True,
+    # },
+    # {
+    #     'name': 'repeat_prisoner',
+    #     'display_name': "Repeat Prisoner's Dilemma (正式用)",
+    #     'num_demo_participants': 2,
+    #     'app_sequence': ['repeat_prisoner'],
+    #     'debug_mode': False,
+    # },
+    # {
+    #     'name': 'coase_debug_24',
+    #     'display_name': "Coase Theorem (Debug 24P)",
+    #     'num_demo_participants': 24,
+    #     'app_sequence': [
+    #         'Coase'
+    #     ],
+    #     'game_time_sec': 15,
+    #     'debug_mode': True,
+    #     'participation_fee': 15,
+    #     'high_value': 189,
+    #     'low_value': 99
+    # },
+    # {
+    #     'name': 'coase_debug_8',
+    #     'display_name': "Coase Theorem (Debug 8P)",
+    #     'num_demo_participants': 8,
+    #     'app_sequence': [
+    #         'Coase'
+    #     ],
+    #     'game_time_sec': 15,
+    #     'debug_mode': True,
+    #     'participation_fee': 15,
+    #     'high_value': 189,
+    #     'low_value': 99
+    # },
+    # {
+    #     'name': 'public_goods_survey_risk',
+    #     'display_name': "Public Goods & Survey Risk",
+    #     'num_demo_participants': 3,
+    #     'app_sequence': ['public_goods', 'survey_risk'],
+    # },
+    # {
+    #     'name': 'survey_environment',
+    #     'display_name': "Survey: Environment",
+    #     'num_demo_participants': 1,
+    #     'app_sequence': ['survey_environment'],
+    # },
+    # {
+    #     'name': 'survey_basic_info',
+    #     'display_name': "Survey: Basic Information",
+    #     'num_demo_participants': 1,
+    #     'app_sequence': ['survey_basic_info'],
+    # },
+    # {
+    #     'name': 'survey_risk',
+    #     'display_name': "Survey: Risk",
+    #     'num_demo_participants': 1,
+    #     'app_sequence': ['survey_risk'],
+    # },
+    # {
+    #     'name': 'survey_risk_payment',
+    #     'display_name': "Survey: Risk + Payment",
+    #     'participation_fee': 15,
+    #     'num_demo_participants': 1,
+    #     'app_sequence': ['survey_risk', 'Coase_payment'],
+    # },
+    #
+    # {
+    #     'name': 'coase_svrisk_payment_8',
+    #     'display_name': "Coase Theorem + Survey: Risk + Payment (8P)",
+    #     'num_demo_participants': 8,
+    #     'app_sequence': [
+    #         'Coase', 'survey_risk', 'Coase_payment'
+    #     ],
+    #     # 'game_time_sec': 15,
+    #     'debug_mode': False,
+    #     'participation_fee': 15,
+    #     'high_value': 189,
+    #     'low_value': 99
+    # },
     {
         'name': 'coase_svrisk_svenv_svbasic_payment_8',
         'display_name': "Coase Theorem + Survey: Risk + Survey: Environment + Survey: Basic Information + Payment (8P)",
@@ -443,11 +443,56 @@ SESSION_CONFIGS = [
         'app_sequence': [
             'Coase', 'survey_risk', 'survey_environment', 'survey_basic_info', 'Coase_payment'
         ],
-        #'game_time_sec': 15,
+        # 'game_time_sec': 15,
         'debug_mode': False,
         'participation_fee': 15,
         'high_value': 189,
         'low_value': 99
+    },
+    {
+        'name': 'words_game_normal_debug_8',
+        'display_name': "Words Game Debug (8P)",
+        'num_demo_participants': 8,
+        'app_sequence': [
+            'words_game_normal'
+        ],
+        'game_play_sec': 120,
+        'game_rest_sec': 30,
+        'debug_play_sec': 15,
+        'debug_rest_sec': 15,
+        'debug_mode': True,
+        'participation_fee': 15,
+
+    },
+    {
+        'name': 'words_game_normal_debug_24',
+        'display_name': "Words Game Debug (24P)",
+        'num_demo_participants': 24,
+        'app_sequence': [
+            'words_game_normal'
+        ],
+        'game_play_sec': 120,
+        'game_rest_sec': 30,
+        'debug_play_sec': 15,
+        'debug_rest_sec': 15,
+        'debug_mode': True,
+        'participation_fee': 15,
+
+    },
+    {
+        'name': 'words_game_normal_8',
+        'display_name': "Words Game (8P)",
+        'num_demo_participants': 8,
+        'app_sequence': [
+            'words_game_normal'
+        ],
+        'game_play_sec': 120,
+        'game_rest_sec': 30,
+        'debug_play_sec': 15,
+        'debug_rest_sec': 15,
+        'debug_mode': False,
+        'participation_fee': 15,
+
     },
     # {
     #     'name': 'survey',

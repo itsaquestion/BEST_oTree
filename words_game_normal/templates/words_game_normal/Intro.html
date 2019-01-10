@@ -1,5 +1,5 @@
 {% extends "global/Page.html" %}
-{% load staticfiles otree %}
+{% load otree static %}
 
 {% block title %}
     导言
@@ -7,11 +7,6 @@
 
 {% block content %}
 
-
-    <p>
-    这是导言01
-    </p>
-
-
+    {% next_button %}
 
 {% endblock %}
