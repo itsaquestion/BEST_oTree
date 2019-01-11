@@ -1,0 +1,12 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    准备开始第{{ subsession.round_number }}轮游戏
+{% endblock %}
+{% block content %}
+    <p>下面即将开始第{{ subsession.round_number }}轮游戏。电脑已经为你随机匹配了一名对手。</p>
+    <p>在半场休息时间，你会得知你自己的上半场的表现以及是否暂时领先。</p>
+    {% next_button %}
+
+{% endblock %}

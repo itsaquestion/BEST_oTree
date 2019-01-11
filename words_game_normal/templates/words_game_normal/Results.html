@@ -2,12 +2,13 @@
 {% load otree static %}
 
 {% block title %}
-    结果
+
 {% endblock %}
 
 {% block content %}
-    <p>最终成绩: {{ player.correct_final }}</p>
-    <p>最终胜负: {{ player.win_final }}</p>
+    <p>本轮游戏结束。在本轮游戏中，你错误编码了{{ player.wrong_final }}个汉字，正确编码了{{ player.correct_final }}个汉字。</p>
+    <p>本轮游戏胜负将在整个实验结束后呈现。</p>
+    <p>阅读完毕请按【下一步】</p>
     {% next_button %}
 {% endblock %}
 

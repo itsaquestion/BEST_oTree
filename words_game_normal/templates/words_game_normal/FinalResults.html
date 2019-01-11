@@ -1,0 +1,32 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    最终结果
+{% endblock %}
+
+{% block content %}
+    <p>
+        在第一轮游戏中，你正确编码了{{ r1_correct }}个汉字。你的对手正确编码了{{ op_r1_correct }}个汉字。
+    </p>
+    <p>
+        你在第一轮游戏中{{ results_01 }}了。
+    </p>
+    <p>
+        在第二轮游戏中，你正确编码了{{ r2_correct }}个汉字。你的对手正确编码了{{ op_r2_correct }}个汉字。
+    </p>
+    <p>
+        你在第二轮游戏中{{ results_02 }}了。
+    </p>
+    <p>
+        在第三轮游戏中，你正确编码了{{ r3_correct }}个汉字。你的对手正确编码了{{ op_r3_correct }}个汉字。
+    </p>
+    <p>
+        你在第三轮游戏中{{ results_03 }}了。
+    </p>
+    <p>
+        电脑抽取了第{{ player.pay_round  }}轮决定你的报酬。你本次实验的最终报酬为{{ payoff_final }}元。
+    </p>
+{% endblock %}
+
+

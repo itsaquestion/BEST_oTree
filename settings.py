@@ -449,50 +449,77 @@ SESSION_CONFIGS = [
         'high_value': 189,
         'low_value': 99
     },
+    # {
+    #     'name': 'words_game_normal_debug_8',
+    #     'display_name': "Words Game Debug (8P)",
+    #     'num_demo_participants': 8,
+    #     'app_sequence': [
+    #         'words_game_normal'
+    #     ],
+    #     'game_play_sec': 120,
+    #     'game_rest_sec': 60,
+    #     'debug_play_sec': 15,
+    #     'debug_rest_sec': 15,
+    #     'debug_mode': True,
+    #     'participation_fee': 15,
+    #
+    # },
+    # {
+    #     'name': 'words_game_normal_debug_24',
+    #     'display_name': "Words Game Debug (24P)",
+    #     'num_demo_participants': 24,
+    #     'app_sequence': [
+    #         'words_game_normal'
+    #     ],
+    #     'game_play_sec': 120,
+    #     'game_rest_sec': 60,
+    #     'debug_play_sec': 15,
+    #     'debug_rest_sec': 15,
+    #     'debug_mode': True,
+    #     'participation_fee': 15,
+    #
+    # },
     {
         'name': 'words_game_normal_debug_8',
-        'display_name': "Words Game Debug (8P)",
+        'display_name': "Words Game (Debug 8P)",
         'num_demo_participants': 8,
-        'app_sequence': [
-            'words_game_normal'
-        ],
+        'app_sequence': ['words_game_normal'],
         'game_play_sec': 120,
-        'game_rest_sec': 30,
+        'game_rest_sec': 60,
         'debug_play_sec': 15,
         'debug_rest_sec': 15,
         'debug_mode': True,
         'participation_fee': 15,
-
-    },
-    {
-        'name': 'words_game_normal_debug_24',
-        'display_name': "Words Game Debug (24P)",
-        'num_demo_participants': 24,
-        'app_sequence': [
-            'words_game_normal'
-        ],
-        'game_play_sec': 120,
-        'game_rest_sec': 30,
-        'debug_play_sec': 15,
-        'debug_rest_sec': 15,
-        'debug_mode': True,
-        'participation_fee': 15,
-
+        'bonus': 30,
+        'fee': 15,
     },
     {
         'name': 'words_game_normal_8',
         'display_name': "Words Game (8P)",
         'num_demo_participants': 8,
-        'app_sequence': [
-            'words_game_normal'
-        ],
+        'app_sequence': ['words_game_normal'],
         'game_play_sec': 120,
-        'game_rest_sec': 30,
+        'game_rest_sec': 60,
         'debug_play_sec': 15,
         'debug_rest_sec': 15,
         'debug_mode': False,
         'participation_fee': 15,
-
+        'bonus': 30,
+        'fee': 15,
+    },
+    {
+        'name': 'words_game_normal_24',
+        'display_name': "Words Game (24P)",
+        'num_demo_participants': 24,
+        'app_sequence': ['words_game_normal'],
+        'game_play_sec': 120,
+        'game_rest_sec': 60,
+        'debug_play_sec': 15,
+        'debug_rest_sec': 15,
+        'debug_mode': False,
+        'participation_fee': 15,
+        'bonus': 30,
+        'fee': 15,
     },
     # {
     #     'name': 'survey',

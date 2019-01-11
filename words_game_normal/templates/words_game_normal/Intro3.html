@@ -1,0 +1,17 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    实验介绍
+{% endblock %}
+
+{% block content %}
+<p>
+    这个游戏会进行三轮。每轮游戏分上下半场，每半场2分钟，半场之间有30秒的休息时间。在每一轮游戏里，你们都会和在场的<strong>随机一位</strong>同学比赛。<strong>正确</strong>编码汉字个数更多的同学将获胜。如果正确编码汉字个数一样，电脑将<strong>随机决定</strong>胜利者。游戏结束后，电脑将在三轮游戏中<strong>随机抽取一轮</strong>，你们在这一轮的胜负情况将决定你们能否获得{{ bonus }}元的额外奖励。
+</p>
+<p>
+    阅读完毕请按【下一步】。如果有任何疑问，请举手示意。
+</p>
+    {% next_button %}
+
+{% endblock %}
