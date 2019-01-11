@@ -128,7 +128,7 @@ class RestMid(Page):
         elif self.player.win_01 == -1:
             return {'rank': '落后'}
         else:
-            return {'rank': '不分胜负'}
+            return {'rank': '与对手不相上下'}
 
     def is_displayed(self):
         return self.player.treatment == 'mid'

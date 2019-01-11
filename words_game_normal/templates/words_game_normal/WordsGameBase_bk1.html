@@ -36,7 +36,7 @@
 
         function makeTableHTML(myArray) {
             var result = "<table border=1 >";
-            var counter = 11;
+            var counter = 1;
             for (var i = 0; i < myArray.length; i++) {
                 result += "<tr align=\"right\">";
                 for (var j = 0; j < myArray[i].length; j++) {
@@ -86,7 +86,7 @@
 
             right_number = Math.floor(Math.random() * n_candidate);
             target_char = candidate_list[right_number];
-            right_number += 11;
+            right_number++;
 
             document.getElementById("target_char").innerHTML = target_char;
             document.getElementById("debug_right_number").innerHTML = right_number;
@@ -104,14 +104,14 @@
 
             if (document.getElementById("number").value == right_number) {
                 correct++;
-                reload();
+
             }
 
             document.getElementById("id_total").value = total;
             document.getElementById("id_n_try").value = n_try;
             document.getElementById("id_correct").value = correct;
 
-
+            reload();
 
             document.getElementById('number').focus();
             document.getElementById('number').value = "";
@@ -143,8 +143,7 @@
                onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
                onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"/>
         <input type="hidden" value=""/>
-        <button style="display: none" onclick="{ok();return false;}">确定</button>
-        <p>按回车键确认输入</p>
+        <button onclick="{ok();return false;}">确定</button>
         <!-- 或在对应input上添加，同时建议取消自动填充，因为mac下会有问题<input type="text" value="" autocomplete="off" onkeydown="if(event.keyCode==13){return false;}" /> -->
     </form>
 
