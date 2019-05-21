@@ -86,11 +86,10 @@ class Group(BaseGroup):
             p.correct_final = p.correct_01 + p.correct_02
             p.total_final = p.total_01 + p.total_02
             p.wrong_final = p.total_final - p.correct_final
-            if p.correct_final > partner.correct_final:
+            if p.correct_final > partner.correct_01 + partner.correct_02:
                 p.win_final = 1
-            elif p.correct_final < partner.correct_final:
+            elif p.correct_final < partner.correct_01 + partner.correct_02:
                 p.win_final = -1
-                p.results_final = '失败'
             else:
                 if p.id_in_group > partner.id_in_group:
                     p.win_final = 1
@@ -177,6 +176,8 @@ class Player(BasePlayer):
         widget=widgets.RadioSelectHorizontal
     )
 
-    sur_computer_exp =models.IntegerField(
-        verbose_name="你接触电脑几年了"
+    sur_computer_exp =models.StringField(
+        choices=['非常不熟练', '不熟练', '一般', '熟练', '非常熟练'],
+        verbose_name="请问你打字的熟练程度是",
+        widget=widgets.RadioSelectHorizontal
     )

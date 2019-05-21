@@ -1,0 +1,90 @@
+{% extends "risk/__PageBase.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    小游戏说明
+{% endblock %}
+
+{% block styles %}
+
+    <!-- define a style -->
+    <style type="text/css">
+        .div-a {
+            float: left;
+            width: 55%;
+        {#border: 1px solid #F00#}
+        }
+
+        .div-b {
+            float: right;
+            width: 40%;
+        {#border: 1px solid #000#} font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+            font-size: x-large;
+            line-height: 30px;
+            letter-spacing: 5px;
+        }
+
+
+    </style>
+
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+
+
+        function reload_matrix() {
+            //0.70 ~ 0.85之际的随机数
+            var x = 10;
+            var y = 1;
+            var n = x * y;
+            var p = Math.random() * (0.55 - 0.45) + 0.45;
+            var n_0 = Math.floor(p * n);
+            document.getElementById("matrix").innerHTML = makeMatrix(x, y, n_0);
+
+        }
+
+        window.onload = function () {
+            reload_matrix();
+        };
+
+        function borderColor(){
+            if(self['oText'].style.borderColor=='red'){
+            self['oText'].style.borderColor = 'yellow';
+            }else{
+            self['oText'].style.borderColor = 'red';
+            }
+            oTime = setTimeout('borderColor()',400);
+        };
+</Script>
+
+    </script>
+{% endblock %}
+
+
+{% block content %}
+        <div>
+        <div class="div-a">
+
+    <p>接下来您将根据提示完成一个数零游戏，并给出答案</p>
+    <p>
+        具体地，游戏开始后，您会看到类似右边的数字表。
+        您需要尽快数出其中0的个数，填入下方空格，随后点击<提交>按钮进入下一个数字表。
+
+    </p>
+    <p>
+        如果你输入的答案正确，电脑会自动生成一个新的图表。
+    </p>
+    <p>如果您输入的答案错误，您还有另外的两次机会重新输入答案（所以共有三次机会）。
+    您只要在三次机会中输入正确答案一次，即被判为正确。如果在同一张图表中，三次输入均不正确，
+    电脑将更换图表。您需要答对40个图表才给予奖励报酬。实验中将以代币作为报酬，实验结束将统一兑换为人民币。（10代币=1元）</p>
+    <p>
+   请按【下一页】开始游戏
+    </p>
+{% next_button %}
+        </div>
+        <div class="div-b" id="matrix"></div>
+    </div>
+
+{% endblock %}

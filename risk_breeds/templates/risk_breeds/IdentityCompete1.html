@@ -1,0 +1,123 @@
+{% extends "risk_breeds/__PageBase.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block styles %}
+
+
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script>
+
+        var real_n0 = 0;
+        var total_correct = 0;
+        var local_counter = 0;
+
+        function reload_matrix() {
+            //0.70 ~ 0.85之际的随机数
+            var x = 15;
+            var y = 5;
+            var n = x * y;
+            var p = Math.random() * (0.55 - 0.45) + 0.45;
+            var n_0 = Math.floor(p * n);
+            document.getElementById("matrix").innerHTML = makeMatrix(x, y, n_0);
+            real_n0 = n_0;
+            document.getElementById("debug").innerHTML = "0的数量为:".concat(real_n0);
+        }
+
+        window.onload = function () {
+
+            reload_matrix();
+            update_counter_msg();
+        };
+
+        function check() {
+            var ans = document.getElementById("ans").value;
+            if (ans == real_n0) {
+                reload_matrix();
+                local_counter = 0;
+                total_correct += 1;
+            } else {
+                local_counter++;
+                if (local_counter == 3) {
+                    reload_matrix();
+                    local_counter = 0;
+                    //update_msg("错了三次，更换")
+                }
+            }
+
+            update_counter_msg();
+            document.getElementById("ans").value = "";
+        }
+
+        function feedback_flash(){
+            document.getElementById('feedback').style.backgroundColor = "LAVENDER";
+            setTimeout(function(){ document.getElementById('feedback').style.backgroundColor = "white" }, 200);
+        }
+
+        function update_msg(msg){
+            document.getElementById('feedback').innerText = msg;
+            feedback_flash();
+        }
+
+        function update_counter_msg(){
+            document.getElementById('counter').innerText = "总共正确：" + (total_correct) + (", ") + ("本轮尝试：") + local_counter;
+            document.getElementById('id_correct').value = total_correct;
+        }
+
+        function formSubmit() {
+
+               if(total_correct>3){
+                        document.getElementById("myForm").submit()
+               }
+
+        }
+
+    </script>
+
+{% endblock %}
+
+{% block content %}
+
+<form id="myForm">
+    <div class="matrix" id="matrix">
+
+    </div>
+
+    <br>
+    <H5>
+        上表中有多少个0？
+    </H5>
+
+    <input type="number" name="ans" id="ans" style="width:3.6em" autocomplete="off"
+           >
+
+{#    这个按钮不能有id和name，否则回车就会提交#}
+    <input type="submit" class="btn" value="提交" onClick="if(total_correct<7){check();return false;}">
+
+
+    <br>
+    <br>
+    <h5 id = "counter"></h5>
+
+    <h6 id = "feedback"></h6>
+
+    <div {{ session.vars.is_debug |yesno:"'',hidden" }}>
+        <hr>
+        <h6>Debug信息</h6>
+        <div id="debug">
+
+    </div>
+
+        <input type="number" name="correct" value="0" id="id_correct"/>
+
+    </div>
+</form>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    彩票决策   第{{H2}}轮
+{% endblock %}
+
+{% block content %}
+
+
+
+
+<table class="table am-table-striped">
+    {% for field in form %}
+        <tr>
+            <td style="word-wrap:break-word;word-break:break-all;" width="700px">{{ field.label }}</td>
+
+            {% for choice in field %}
+                <td >{{ choice }}</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+
+    </table>
+
+    {% next_button %}
+
+
+{% endblock %}

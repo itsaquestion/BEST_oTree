@@ -1,0 +1,27 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    彩票决策   第三轮
+{% endblock %}
+
+{% block content %}
+
+
+
+
+    <table class="table am-table-striped">
+    {% for field in form %}
+        <tr>
+            <th>{{ field.label }}</th>
+            {% for choice in field %}
+                <td>{{ choice }}</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+
+    </table>
+
+    {% next_button %}
+
+{% endblock %}

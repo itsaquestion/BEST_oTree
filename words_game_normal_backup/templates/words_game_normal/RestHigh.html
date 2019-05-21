@@ -1,0 +1,22 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+    <p>
+    你在本轮游戏上半场错误编码了{{ player.wrong_01 }}个汉字，正确编码了{{ player.correct_01 }}个汉字。
+    </p>
+    <p>
+    你本轮的对手在本轮游戏上半场错误编码了{{ op_wrong }}个汉字，正确编码了{{ op_correct }}个汉字。
+    </p>
+    <p>
+    你在本轮游戏上半场，暂时{{ feedback }}。
+    </p>
+    <p>
+    请休息半分钟，准备下半场的游戏。
+    </p>
+
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+    <p><b>请填写必要的个人信息和态度调查问卷，我们确保以下信息不会追踪到个人并完全保密，请放心并如实填写</b></p>
+
+    <br>
+         {% formfield player.sur_birth_year %}{% formfield player.sur_birth_month %}
+    <br>
+         {% formfield player.sur_gender %}
+    <br>
+         {% formfield player.sur_grade %}
+    <br>
+         {% formfield player.sur_school %}
+    <br>
+         {% formfield player.sur_party_member %}
+    <br>
+         {% formfield player.sur_student_leader %}
+    <br>
+         {% formfield player.sur_place %}
+    <br>
+         {% formfield player.sur_nation %}
+    <br>
+         {% formfield player.sur_economy %}
+    <br>
+         {% formfield player.sur_height %}
+    <br>
+         {% formfield player.sur_weight %}
+    <br>
+         {% formfield player.sur_cash %}
+    <br>
+         {% formfield player.sur_big_brother %}{% formfield player.sur_little_brother %}{% formfield player.sur_big_sister %}
+            {% formfield player.sur_little_sister %}
+    <br>
+         {% formfield player.sur_mother %}{% formfield player.sur_father %}
+    <br>
+         {% formfield player.sur_come_from %}
+    <br>
+         {% formfield player.sur_income %}
+    <br>
+         {% formfield player.sur_left_behind %}
+    <br>
+         {% formfield player.sur_risk %}
+    <br>
+         {% formfield player.sur_risk1 %}
+    <br>
+         {% formfield player.sur_risk2 %}
+    <br>
+         {% formfield player.sur_risk3 %}
+<p>
+   请按【下一页】
+</p>
+    {% next_button %}
+
+{% endblock %}
